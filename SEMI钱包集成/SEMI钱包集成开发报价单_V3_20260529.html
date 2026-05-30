@@ -254,12 +254,52 @@
   .nav-btn:hover { background: var(--teal); color: #fff; }
 
   @media (max-width: 720px) {
-    .page { padding: 16px; }
+    .page { padding: 12px; }
     .assume-grid { grid-template-columns: 1fr 1fr; }
     .phase-grid { grid-template-columns: 1fr; }
-    .summary-banner { flex-wrap: wrap; gap: 20px; }
-    .header { padding: 14px 16px; }
-    th, td { padding: 8px 10px; }
+    .summary-banner { flex-wrap: wrap; gap: 16px; padding: 16px; }
+    .summary-item .val { font-size: 22px; }
+    .header { padding: 12px 14px; }
+    .header-title h1 { font-size: 14px; }
+    .header-title p { font-size: 11px; }
+    .card { padding: 16px 14px; }
+    .page-title { font-size: 18px; }
+
+    /* 表格：手机上隐藏「条件」栏，因为内容已在 Phase 卡片呈现 */
+    .hide-mobile { display: none !important; }
+
+    /* 表格文字缩小、单元格收紧 */
+    table { font-size: 12px; }
+    th, td { padding: 7px 8px; }
+
+    /* 让长文本换行而非撑宽 */
+    td { word-break: break-word; }
+
+    /* 数字栏固定宽度，避免挤压 */
+    .num { white-space: nowrap; }
+
+    /* 付款明细表：条件栏隐藏后剩余栏均分 */
+    #tab-eth table td:nth-child(2),
+    #tab-eth table th:nth-child(2) { display: none; }
+
+    /* 开发报价表：任务说明栏在手机上折叠显示 */
+    #tab-quote .card table td:nth-child(2),
+    #tab-quote .card table th:nth-child(2) { display: none; }
+
+    /* 范围声明表：技术实现栏保留但限制宽度 */
+    #tab-scope table { table-layout: fixed; }
+    #tab-scope table td:first-child { width: 35%; }
+
+    /* 背景说明表：隐藏纪要详情的大文字栏在极窄屏 */
+    .reason-card { padding: 12px 14px; gap: 10px; }
+    .reason-icon { width: 30px; height: 30px; font-size: 15px; }
+  }
+
+  @media (max-width: 480px) {
+    .assume-grid { grid-template-columns: 1fr; }
+    .summary-divider { display: none; }
+    .summary-banner { gap: 12px; }
+    .tab { padding: 10px 12px; font-size: 12px; }
   }
 </style>
 </head>
