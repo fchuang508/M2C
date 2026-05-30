@@ -1,2 +1,2 @@
-# M2C
-Motion to Contract · Governance-native Community Commerce · by iMeeting
+# M2C — Motion to Contract
+From Conversation to Inevitable Execution · by iMeeting
