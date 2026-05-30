@@ -264,35 +264,59 @@
     .header-title p { font-size: 11px; }
     .card { padding: 16px 14px; }
     .page-title { font-size: 18px; }
-
-    /* 表格：手机上隐藏「条件」栏，因为内容已在 Phase 卡片呈现 */
-    .hide-mobile { display: none !important; }
-
-    /* 表格文字缩小、单元格收紧 */
-    table { font-size: 12px; }
-    th, td { padding: 7px 8px; }
-
-    /* 让长文本换行而非撑宽 */
-    td { word-break: break-word; }
-
-    /* 数字栏固定宽度，避免挤压 */
-    .num { white-space: nowrap; }
-
-    /* 付款明细表：条件栏隐藏后剩余栏均分 */
-    #tab-eth table td:nth-child(2),
-    #tab-eth table th:nth-child(2) { display: none; }
-
-    /* 开发报价表：任务说明栏在手机上折叠显示 */
-    #tab-quote .card table td:nth-child(2),
-    #tab-quote .card table th:nth-child(2) { display: none; }
-
-    /* 范围声明表：技术实现栏保留但限制宽度 */
-    #tab-scope table { table-layout: fixed; }
-    #tab-scope table td:first-child { width: 35%; }
-
-    /* 背景说明表：隐藏纪要详情的大文字栏在极窄屏 */
     .reason-card { padding: 12px 14px; gap: 10px; }
     .reason-icon { width: 30px; height: 30px; font-size: 15px; }
+
+    /* ── 响应式表格：卡片堆叠模式 ── */
+    table, thead, tbody, th, td, tr { display: block; }
+
+    /* 隐藏表头，改由 data-label 显示 */
+    thead tr { display: none; }
+
+    /* 每行变成一张卡片 */
+    tbody tr {
+      margin-bottom: 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+    tbody tr:hover { background: var(--surface); }
+    tbody tr:last-child { margin-bottom: 0; }
+
+    /* 每个单元格：标签 + 内容上下排 */
+    td {
+      display: flex;
+      flex-direction: column;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left !important;
+      font-family: inherit;
+      white-space: normal;
+    }
+    td:last-child { border-bottom: none; }
+
+    /* data-label 作为小标题 */
+    td::before {
+      content: attr(data-label);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-sub);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+    /* 没有 label 的单元格（colspan 合计行）不显示前缀 */
+    td[colspan]::before { content: none; }
+    td[colspan] { font-weight: 700; background: var(--teal-bg); color: var(--teal); }
+
+    /* subtotal / total-row 特殊处理 */
+    .subtotal td { background: var(--teal-bg) !important; }
+    .total-row td { background: var(--dark) !important; color: #fff !important; border-radius: 0 !important; }
+    .current-row td { background: var(--yellow) !important; color: var(--dark) !important; }
+
+    /* 隐藏空单元格（无内容且无 label） */
+    td:empty { display: none; }
   }
 
   @media (max-width: 480px) {
@@ -336,20 +360,20 @@
       <thead><tr><th style="width:22%">功能点</th><th>技术实现 & 覆盖场景</th></tr></thead>
       <tbody>
         <tr>
-          <td><span class="tag-in">IN</span> &nbsp;<strong>(a) 钱包身份验证</strong></td>
-          <td>OAuth2 Implicit Flow → access_token → SEMI /get_me → iMeeting 后端签发 Auth Token<br><span style="color:var(--text-sub)">覆盖场景：持有 SEMI 钱包的用户一键登录 iMeeting</span></td>
+          <td data-label="功能点"><span class="tag-in">IN</span> &nbsp;<strong>(a) 钱包身份验证</strong></td>
+          <td data-label="技术实现 & 覆盖场景">OAuth2 Implicit Flow → access_token → SEMI /get_me → iMeeting 后端签发 Auth Token<br><span style="color:var(--text-sub)">覆盖场景：持有 SEMI 钱包的用户一键登录 iMeeting</span></td>
         </tr>
         <tr>
-          <td><span class="tag-in">IN</span> &nbsp;<strong>(b) 身份绑定</strong></td>
-          <td>已登录 iMeeting 用户发起 SEMI 绑定；匹配逻辑：semiId → 手机号 → 邮箱；写入 UserModel<br><span style="color:var(--text-sub)">覆盖场景：老用户在 Profile 页绑定 / 更换 SEMI 钱包</span></td>
+          <td data-label="功能点"><span class="tag-in">IN</span> &nbsp;<strong>(b) 身份绑定</strong></td>
+          <td data-label="技术实现 & 覆盖场景">已登录 iMeeting 用户发起 SEMI 绑定；匹配逻辑：semiId → 手机号 → 邮箱；写入 UserModel<br><span style="color:var(--text-sub)">覆盖场景：老用户在 Profile 页绑定 / 更换 SEMI 钱包</span></td>
         </tr>
         <tr>
-          <td><span class="tag-in">IN</span> &nbsp;<strong>(c) 新账户创建</strong></td>
-          <td>首次钱包登录无匹配账户时，以 SEMI 手机号/邮箱自动注册新 iMeeting 账户<br><span style="color:var(--text-sub)">覆盖场景：新用户通过 SEMI 钱包直接完成注册</span></td>
+          <td data-label="功能点"><span class="tag-in">IN</span> &nbsp;<strong>(c) 新账户创建</strong></td>
+          <td data-label="技术实现 & 覆盖场景">首次钱包登录无匹配账户时，以 SEMI 手机号/邮箱自动注册新 iMeeting 账户<br><span style="color:var(--text-sub)">覆盖场景：新用户通过 SEMI 钱包直接完成注册</span></td>
         </tr>
         <tr>
-          <td><span class="tag-in">IN</span> &nbsp;<strong>(d) 双技术路线兼容</strong></td>
-          <td>以 OAuth2 Implicit Flow 为主路线；同步保持项目沟通期前 SEMI API 直连路线为辅，确保切换灵活性<br><span style="color:var(--text-sub)">覆盖场景：OAuth 上线前以 API 路线维持可用；OAuth 就绪后无缝切换为主路线，API 路线作降级保留</span></td>
+          <td data-label="功能点"><span class="tag-in">IN</span> &nbsp;<strong>(d) 双技术路线兼容</strong></td>
+          <td data-label="技术实现 & 覆盖场景">以 OAuth2 Implicit Flow 为主路线；同步保持项目沟通期前 SEMI API 直连路线为辅，确保切换灵活性<br><span style="color:var(--text-sub)">覆盖场景：OAuth 上线前以 API 路线维持可用；OAuth 就绪后无缝切换为主路线，API 路线作降级保留</span></td>
         </tr>
       </tbody>
     </table>
@@ -363,14 +387,14 @@
     <table>
       <thead><tr><th style="width:22%">类别</th><th>说明</th></tr></thead>
       <tbody>
-        <tr><td><span class="tag-out">OUT</span> &nbsp;链上交易发起</td><td>代币转账、NFT 铸造/转移等任何需用户签名并广播至链上的操作</td></tr>
-        <tr><td><span class="tag-out">OUT</span> &nbsp;链上数据读取</td><td>钱包余额、NFT 持仓、链上历史、合约状态 read calls</td></tr>
-        <tr><td><span class="tag-out">OUT</span> &nbsp;智能合约交互</td><td>调用任何合约（ERC-20/721/1155/6551 等）的 write 操作</td></tr>
-        <tr><td><span class="tag-out">OUT</span> &nbsp;Gas 代付 / Paymaster</td><td>ERC-4337 账户抽象、无感 Gas 支付流程</td></tr>
-        <tr><td><span class="tag-out">OUT</span> &nbsp;钱包资产管理</td><td>余额展示、资产列表、历史记录、代币兑换等钱包原生功能</td></tr>
-        <tr><td><span class="tag-out">OUT</span> &nbsp;多链支持</td><td>以太坊以外的任何链（Polygon、BSC、Arbitrum、Base 等）</td></tr>
-        <tr><td><span class="tag-out">OUT</span> &nbsp;SEMI 深度 API</td><td>除 /get_me 外的任何 SEMI 接口（支付、积分、链上操作代理等）</td></tr>
-        <tr><td><span class="tag-out">OUT</span> &nbsp;其他业务功能</td><td>iMeeting 原有功能修改、会议/通知/支付/统计等与钱包身份无关模块</td></tr>
+        <tr><td data-label="类别"><span class="tag-out">OUT</span> &nbsp;链上交易发起</td><td data-label="说明">代币转账、NFT 铸造/转移等任何需用户签名并广播至链上的操作</td></tr>
+        <tr><td data-label="类别"><span class="tag-out">OUT</span> &nbsp;链上数据读取</td><td data-label="说明">钱包余额、NFT 持仓、链上历史、合约状态 read calls</td></tr>
+        <tr><td data-label="类别"><span class="tag-out">OUT</span> &nbsp;智能合约交互</td><td data-label="说明">调用任何合约（ERC-20/721/1155/6551 等）的 write 操作</td></tr>
+        <tr><td data-label="类别"><span class="tag-out">OUT</span> &nbsp;Gas 代付 / Paymaster</td><td data-label="说明">ERC-4337 账户抽象、无感 Gas 支付流程</td></tr>
+        <tr><td data-label="类别"><span class="tag-out">OUT</span> &nbsp;钱包资产管理</td><td data-label="说明">余额展示、资产列表、历史记录、代币兑换等钱包原生功能</td></tr>
+        <tr><td data-label="类别"><span class="tag-out">OUT</span> &nbsp;多链支持</td><td data-label="说明">以太坊以外的任何链（Polygon、BSC、Arbitrum、Base 等）</td></tr>
+        <tr><td data-label="类别"><span class="tag-out">OUT</span> &nbsp;SEMI 深度 API</td><td data-label="说明">除 /get_me 外的任何 SEMI 接口（支付、积分、链上操作代理等）</td></tr>
+        <tr><td data-label="类别"><span class="tag-out">OUT</span> &nbsp;其他业务功能</td><td data-label="说明">iMeeting 原有功能修改、会议/通知/支付/统计等与钱包身份无关模块</td></tr>
       </tbody>
     </table>
   </div>
@@ -414,15 +438,15 @@
         <tr><th style="width:18%">开发模块</th><th>任务说明</th><th class="num" style="width:80px">工时(h)</th><th class="num" style="width:80px">单价($)</th><th class="num" style="width:90px">费用($)</th><th class="num" style="width:90px">费用(¥)</th></tr>
       </thead>
       <tbody>
-        <tr><td>① 环境 &amp; 模型</td><td>UserModel 新增 semiId / semiWalletAddress / semiSyncAt；配置 .env 变量</td><td class="num">3</td><td class="num">22</td><td class="num">66</td><td class="num">478.50</td></tr>
-        <tr><td>② loginSemi.js</td><td>账户匹配（findById → Mobile/Email → CreateNew）；签发 Auth Token；错误分支</td><td class="num">12</td><td class="num">22</td><td class="num">264</td><td class="num">1,914.00</td></tr>
-        <tr><td>③ linkSemi.js</td><td>已登录用户绑定/解绑/更换钱包；冲突账号检测与提示</td><td class="num">5</td><td class="num">22</td><td class="num">110</td><td class="num">797.50</td></tr>
-        <tr><td>④ 前端 UI</td><td>登录页 SEMI 按钮；Profile 钱包展示 &amp; 绑定入口；Loading 状态动画</td><td class="num">8</td><td class="num">22</td><td class="num">176</td><td class="num">1,276.00</td></tr>
-        <tr><td>⑤ OAuthHelper</td><td>重定向 URL 构建；URL Hash Token 提取；history.replaceState() 安全清理</td><td class="num">12</td><td class="num">22</td><td class="num">264</td><td class="num">1,914.00</td></tr>
-        <tr><td>⑥ 回调处理</td><td>MainPageController 检测 #access_token=；调用 /get_me；同步接口；跳转</td><td class="num">6</td><td class="num">22</td><td class="num">132</td><td class="num">957.00</td></tr>
-        <tr><td>⑦ 账户关联</td><td>前端多状态响应处理（新用户 / 老用户绑定 / 冲突）；登录后路由</td><td class="num">6</td><td class="num">22</td><td class="num">132</td><td class="num">957.00</td></tr>
-        <tr><td>⑧ 测试 &amp; 联调</td><td>OAuth 闭环联调；多设备；账户冲突边缘测试；Testnet 安全回归</td><td class="num">12</td><td class="num">22</td><td class="num">264</td><td class="num">1,914.00</td></tr>
-        <tr class="subtotal"><td colspan="2"><strong>小计</strong></td><td class="num"><strong>64</strong></td><td></td><td class="num"><strong>1,408</strong></td><td class="num"><strong>10,208.00</strong></td></tr>
+        <tr><td data-label="开发模块">① 环境 &amp; 模型</td><td data-label="任务说明">UserModel 新增 semiId / semiWalletAddress / semiSyncAt；配置 .env 变量</td><td class="num" data-label="工时(h)">3</td><td class="num" data-label="单价($)">22</td><td class="num" data-label="费用($)">66</td><td class="num" data-label="费用(¥)">478.50</td></tr>
+        <tr><td data-label="开发模块">② loginSemi.js</td><td data-label="任务说明">账户匹配（findById → Mobile/Email → CreateNew）；签发 Auth Token；错误分支</td><td class="num" data-label="工时(h)">12</td><td class="num" data-label="单价($)">22</td><td class="num" data-label="费用($)">264</td><td class="num" data-label="费用(¥)">1,914.00</td></tr>
+        <tr><td data-label="开发模块">③ linkSemi.js</td><td data-label="任务说明">已登录用户绑定/解绑/更换钱包；冲突账号检测与提示</td><td class="num" data-label="工时(h)">5</td><td class="num" data-label="单价($)">22</td><td class="num" data-label="费用($)">110</td><td class="num" data-label="费用(¥)">797.50</td></tr>
+        <tr><td data-label="开发模块">④ 前端 UI</td><td data-label="任务说明">登录页 SEMI 按钮；Profile 钱包展示 &amp; 绑定入口；Loading 状态动画</td><td class="num" data-label="工时(h)">8</td><td class="num" data-label="单价($)">22</td><td class="num" data-label="费用($)">176</td><td class="num" data-label="费用(¥)">1,276.00</td></tr>
+        <tr><td data-label="开发模块">⑤ OAuthHelper</td><td data-label="任务说明">重定向 URL 构建；URL Hash Token 提取；history.replaceState() 安全清理</td><td class="num" data-label="工时(h)">12</td><td class="num" data-label="单价($)">22</td><td class="num" data-label="费用($)">264</td><td class="num" data-label="费用(¥)">1,914.00</td></tr>
+        <tr><td data-label="开发模块">⑥ 回调处理</td><td data-label="任务说明">MainPageController 检测 #access_token=；调用 /get_me；同步接口；跳转</td><td class="num" data-label="工时(h)">6</td><td class="num" data-label="单价($)">22</td><td class="num" data-label="费用($)">132</td><td class="num" data-label="费用(¥)">957.00</td></tr>
+        <tr><td data-label="开发模块">⑦ 账户关联</td><td data-label="任务说明">前端多状态响应处理（新用户 / 老用户绑定 / 冲突）；登录后路由</td><td class="num" data-label="工时(h)">6</td><td class="num" data-label="单价($)">22</td><td class="num" data-label="费用($)">132</td><td class="num" data-label="费用(¥)">957.00</td></tr>
+        <tr><td data-label="开发模块">⑧ 测试 &amp; 联调</td><td data-label="任务说明">OAuth 闭环联调；多设备；账户冲突边缘测试；Testnet 安全回归</td><td class="num" data-label="工时(h)">12</td><td class="num" data-label="单价($)">22</td><td class="num" data-label="费用($)">264</td><td class="num" data-label="费用(¥)">1,914.00</td></tr>
+        <tr class="subtotal"><td colspan="2"><strong>小计</strong></td><td class="num" data-label="任务说明"><strong>64</strong></td><td data-label="工时(h)"></td><td class="num" data-label="单价($)"><strong>1,408</strong></td><td class="num" data-label="费用($)"><strong>10,208.00</strong></td></tr>
       </tbody>
     </table>
   </div>
@@ -434,11 +458,11 @@
         <tr><th style="width:18%">开发模块</th><th>任务说明</th><th class="num" style="width:80px">工时(h)</th><th class="num" style="width:80px">单价($)</th><th class="num" style="width:90px">费用($)</th><th class="num" style="width:90px">费用(¥)</th></tr>
       </thead>
       <tbody>
-        <tr><td>项目沟通</td><td>需求确认、方案讨论、进度同步（线上/异步）</td><td class="num">6</td><td class="num">22</td><td class="num">132</td><td class="num">957.00</td></tr>
-        <tr><td>Review &amp; 文档</td><td>代码 Review；接口文档；部署说明</td><td class="num">4</td><td class="num">22</td><td class="num">88</td><td class="num">638.00</td></tr>
-        <tr><td>风险预留</td><td>SEMI API 变更、环境差异调试、意外返工</td><td class="num">6</td><td class="num">22</td><td class="num">132</td><td class="num">957.00</td></tr>
-        <tr><td>社区 Handover 沟通</td><td>开发者社区 handover 非预期沟通；双技术路线（API / OAuth）切换协调</td><td class="num">8</td><td class="num">22</td><td class="num">176</td><td class="num">1,276.00</td></tr>
-        <tr class="subtotal"><td colspan="2"><strong>小计</strong></td><td class="num"><strong>24</strong></td><td></td><td class="num"><strong>528</strong></td><td class="num"><strong>3,828.00</strong></td></tr>
+        <tr><td data-label="参数">项目沟通</td><td data-label="值">需求确认、方案讨论、进度同步（线上/异步）</td><td class="num" data-label="备注">6</td><td class="num" data-label="稳定币 (USDT/USDC)">22</td><td class="num" data-label="USDT/CNY 参考">132</td><td class="num" data-label="ETH 参考估算">957.00</td></tr>
+        <tr><td data-label="参数">Review &amp; 文档</td><td data-label="值">代码 Review；接口文档；部署说明</td><td class="num" data-label="备注">4</td><td class="num" data-label="稳定币 (USDT/USDC)">22</td><td class="num" data-label="USDT/CNY 参考">88</td><td class="num" data-label="ETH 参考估算">638.00</td></tr>
+        <tr><td data-label="参数">风险预留</td><td data-label="值">SEMI API 变更、环境差异调试、意外返工</td><td class="num" data-label="备注">6</td><td class="num" data-label="稳定币 (USDT/USDC)">22</td><td class="num" data-label="USDT/CNY 参考">132</td><td class="num" data-label="ETH 参考估算">957.00</td></tr>
+        <tr><td data-label="参数">社区 Handover 沟通</td><td data-label="值">开发者社区 handover 非预期沟通；双技术路线（API / OAuth）切换协调</td><td class="num" data-label="备注">8</td><td class="num" data-label="稳定币 (USDT/USDC)">22</td><td class="num" data-label="USDT/CNY 参考">176</td><td class="num" data-label="ETH 参考估算">1,276.00</td></tr>
+        <tr class="subtotal"><td colspan="2"><strong>小计</strong></td><td class="num" data-label="值"><strong>24</strong></td><td data-label="备注"></td><td class="num" data-label="稳定币 (USDT/USDC)"><strong>528</strong></td><td class="num" data-label="USDT/CNY 参考"><strong>3,828.00</strong></td></tr>
       </tbody>
     </table>
   </div>
@@ -475,16 +499,16 @@
     <table>
       <thead><tr><th style="width:38%">参数</th><th style="width:28%">值</th><th>备注</th></tr></thead>
       <tbody>
-        <tr><td>合同总金额</td><td class="num" style="color:var(--teal);font-weight:700">$1,936 USD</td><td style="color:var(--text-sub)">引用报价单合计；以 USD 为最终计价单位</td></tr>
-        <tr><td>首选支付币种</td><td class="num" style="font-weight:700;color:var(--orange)">USDT / USDC</td><td style="color:var(--text-sub)">稳定币，1:1 锚定美元，无折算风险</td></tr>
-        <tr><td>可接受替代币种</td><td class="num" style="font-weight:700">ETH</td><td style="color:var(--text-sub)">须按首付日价格折算，见 B 节规则</td></tr>
-        <tr><td>Phase 1 比例</td><td class="num" style="color:#2563eb;font-weight:700">70%</td><td style="color:var(--text-sub)">首付，合同签署后 24h 内</td></tr>
-        <tr><td>Phase 2 比例</td><td class="num" style="color:#2563eb;font-weight:700">30%</td><td style="color:var(--text-sub)">验收交付后 48h 内</td></tr>
-        <tr><td>报价日 ETH 14日均价<br><span style="font-size:11px;font-weight:400;color:var(--text-sub)">（5/16–5/29，CoinGecko/Binance）</span></td><td class="num" style="color:#2563eb;font-weight:700;font-family:monospace">≈ $2,104</td><td style="color:var(--text-sub)">5/16 约 $2,320 → 5/29 约 $2,013；14日均价约 $2,104；仅供估算参考</td></tr>
-        <tr><td>USDT / CNY 参考汇率<br><span style="font-size:11px;font-weight:400;color:var(--text-sub)">（兑汇日期：2026/5/29）</span></td><td class="num" style="font-weight:700;font-family:monospace">1 USDT ≈ ¥6.7755</td><td style="color:var(--text-sub)">来源：WEEX；实际兑换以交易所当日报价为准</td></tr>
-        <tr><td>USDC / CNY 参考汇率<br><span style="font-size:11px;font-weight:400;color:var(--text-sub)">（兑汇日期：2026/5/29）</span></td><td class="num" style="font-weight:700;font-family:monospace">1 USDC ≈ ¥6.7661</td><td style="color:var(--text-sub)">来源：Wise USD/CNY 中间价；USDC 与 USD 等值</td></tr>
-        <tr><td>Gas Price (Gwei) <span style="font-weight:400;color:var(--text-sub)">ETH付款适用</span></td><td class="num">5</td><td style="color:var(--text-sub)">主网 ETH 转账保守估算</td></tr>
-        <tr><td>单笔 Gas 费 (ETH) <span style="font-weight:400;color:var(--text-sub)">ETH付款适用</span></td><td class="num" style="font-family:monospace">0.000105</td><td style="color:var(--text-sub)">Gas Limit 21,000 × 5 Gwei × 1e-9</td></tr>
+        <tr><td data-label="参数">合同总金额</td><td class="num" style="color:var(--teal);font-weight:700" data-label="值">$1,936 USD</td><td style="color:var(--text-sub)" data-label="备注">引用报价单合计；以 USD 为最终计价单位</td></tr>
+        <tr><td data-label="参数">首选支付币种</td><td class="num" style="font-weight:700;color:var(--orange)" data-label="值">USDT / USDC</td><td style="color:var(--text-sub)" data-label="备注">稳定币，1:1 锚定美元，无折算风险</td></tr>
+        <tr><td data-label="参数">可接受替代币种</td><td class="num" style="font-weight:700" data-label="值">ETH</td><td style="color:var(--text-sub)" data-label="备注">须按首付日价格折算，见 B 节规则</td></tr>
+        <tr><td data-label="参数">Phase 1 比例</td><td class="num" style="color:#2563eb;font-weight:700" data-label="值">70%</td><td style="color:var(--text-sub)" data-label="备注">首付，合同签署后 24h 内</td></tr>
+        <tr><td data-label="参数">Phase 2 比例</td><td class="num" style="color:#2563eb;font-weight:700" data-label="值">30%</td><td style="color:var(--text-sub)" data-label="备注">验收交付后 48h 内</td></tr>
+        <tr><td data-label="参数">报价日 ETH 14日均价<br><span style="font-size:11px;font-weight:400;color:var(--text-sub)">（5/16–5/29，CoinGecko/Binance）</span></td><td class="num" style="color:#2563eb;font-weight:700;font-family:monospace" data-label="值">≈ $2,104</td><td style="color:var(--text-sub)" data-label="备注">5/16 约 $2,320 → 5/29 约 $2,013；14日均价约 $2,104；仅供估算参考</td></tr>
+        <tr><td data-label="参数">USDT / CNY 参考汇率<br><span style="font-size:11px;font-weight:400;color:var(--text-sub)">（兑汇日期：2026/5/29）</span></td><td class="num" style="font-weight:700;font-family:monospace" data-label="值">1 USDT ≈ ¥6.7755</td><td style="color:var(--text-sub)" data-label="备注">来源：WEEX；实际兑换以交易所当日报价为准</td></tr>
+        <tr><td data-label="参数">USDC / CNY 参考汇率<br><span style="font-size:11px;font-weight:400;color:var(--text-sub)">（兑汇日期：2026/5/29）</span></td><td class="num" style="font-weight:700;font-family:monospace" data-label="值">1 USDC ≈ ¥6.7661</td><td style="color:var(--text-sub)" data-label="备注">来源：Wise USD/CNY 中间价；USDC 与 USD 等值</td></tr>
+        <tr><td data-label="参数">Gas Price (Gwei) <span style="font-weight:400;color:var(--text-sub)">ETH付款适用</span></td><td class="num" data-label="值">5</td><td style="color:var(--text-sub)" data-label="备注">主网 ETH 转账保守估算</td></tr>
+        <tr><td data-label="参数">单笔 Gas 费 (ETH) <span style="font-weight:400;color:var(--text-sub)">ETH付款适用</span></td><td class="num" style="font-family:monospace" data-label="值">0.000105</td><td style="color:var(--text-sub)" data-label="备注">Gas Limit 21,000 × 5 Gwei × 1e-9</td></tr>
       </tbody>
     </table>
   </div>
@@ -497,11 +521,11 @@
     <table>
       <thead><tr><th style="width:28%">规则</th><th>说明</th></tr></thead>
       <tbody>
-        <tr><td><strong>锚定时点</strong></td><td>以该笔款项链上确认时间所在日期（UTC+8）的 ETH/USD 市价为折算基准</td></tr>
-        <tr><td><strong>参考价格来源</strong></td><td>CoinGecko / Binance 现货日均价，双方于付款前 24h 内确认</td></tr>
-        <tr><td><strong>报价日 14日均价用途</strong></td><td>仅用于本报价文件估算参考（见 D 节敏感性表），不作为实际 ETH 折算依据</td></tr>
-        <tr><td><strong>尾款独立定价</strong></td><td>Phase 2 以尾款到账日市价独立折算，与 Phase 1 价格无关</td></tr>
-        <tr><td><strong>超额/不足处理</strong></td><td>若 ETH 折算后与 USD 金额存在微小差异（&lt;0.5%），以实际到账等值为准，不追补</td></tr>
+        <tr><td data-label="规则"><strong>锚定时点</strong></td><td data-label="说明">以该笔款项链上确认时间所在日期（UTC+8）的 ETH/USD 市价为折算基准</td></tr>
+        <tr><td data-label="规则"><strong>参考价格来源</strong></td><td data-label="说明">CoinGecko / Binance 现货日均价，双方于付款前 24h 内确认</td></tr>
+        <tr><td data-label="规则"><strong>报价日 14日均价用途</strong></td><td data-label="说明">仅用于本报价文件估算参考（见 D 节敏感性表），不作为实际 ETH 折算依据</td></tr>
+        <tr><td data-label="规则"><strong>尾款独立定价</strong></td><td data-label="说明">Phase 2 以尾款到账日市价独立折算，与 Phase 1 价格无关</td></tr>
+        <tr><td data-label="规则"><strong>超额/不足处理</strong></td><td data-label="说明">若 ETH 折算后与 USD 金额存在微小差异（&lt;0.5%），以实际到账等值为准，不追补</td></tr>
       </tbody>
     </table>
   </div>
@@ -531,9 +555,9 @@
     <table>
       <thead><tr><th>阶段</th><th>条件</th><th class="num">USD 金额</th><th class="num">稳定币 (USDT/USDC)</th><th class="num">USDT/CNY 参考 <span style="font-weight:400;font-size:10px">(5/29)</span></th><th class="num">ETH 参考估算 *</th></tr></thead>
       <tbody>
-        <tr><td><strong>Phase 1</strong><br><span style="font-size:11px;color:var(--teal)">首付 70%</span></td><td style="font-size:12px;color:var(--text-sub)">合同签署 + 开发启动确认后 24h 内</td><td class="num">1,355.20</td><td class="num" style="color:var(--orange);font-weight:700">1,355.20</td><td class="num">≈ ¥9,183</td><td class="num" style="font-family:monospace;color:var(--text-sub)">≈ 0.64411</td></tr>
-        <tr><td><strong>Phase 2</strong><br><span style="font-size:11px;color:var(--orange)">尾款 30%</span></td><td style="font-size:12px;color:var(--text-sub)">验收通过 + 代码交付后 48h 内</td><td class="num">580.80</td><td class="num" style="color:var(--orange);font-weight:700">580.80</td><td class="num">≈ ¥3,935</td><td class="num" style="font-family:monospace;color:var(--text-sub)">≈ 0.27604</td></tr>
-        <tr class="subtotal"><td colspan="2"><strong>合计</strong> &nbsp;<span style="font-weight:400;font-size:12px">88h × $22/h</span></td><td class="num"><strong>1,936</strong></td><td class="num" style="color:var(--orange);font-weight:700"><strong>1,936.00</strong></td><td class="num"><strong>≈ ¥13,119</strong></td><td class="num" style="font-family:monospace;color:var(--text-sub)"><strong>≈ 0.92015</strong></td></tr>
+        <tr><td data-label="阶段"><strong>Phase 1</strong><br><span style="font-size:11px;color:var(--teal)">首付 70%</span></td><td style="font-size:12px;color:var(--text-sub)" data-label="条件">合同签署 + 开发启动确认后 24h 内</td><td class="num" data-label="USD 金额">1,355.20</td><td class="num" style="color:var(--orange);font-weight:700" data-label="稳定币 (USDT/USDC)">1,355.20</td><td class="num" data-label="USDT/CNY 参考">≈ ¥9,183</td><td class="num" style="font-family:monospace;color:var(--text-sub)" data-label="ETH 参考估算">≈ 0.64411</td></tr>
+        <tr><td data-label="阶段"><strong>Phase 2</strong><br><span style="font-size:11px;color:var(--orange)">尾款 30%</span></td><td style="font-size:12px;color:var(--text-sub)" data-label="条件">验收通过 + 代码交付后 48h 内</td><td class="num" data-label="USD 金额">580.80</td><td class="num" style="color:var(--orange);font-weight:700" data-label="稳定币 (USDT/USDC)">580.80</td><td class="num" data-label="USDT/CNY 参考">≈ ¥3,935</td><td class="num" style="font-family:monospace;color:var(--text-sub)" data-label="ETH 参考估算">≈ 0.27604</td></tr>
+        <tr class="subtotal"><td colspan="2"><strong>合计</strong> &nbsp;<span style="font-weight:400;font-size:12px">88h × $22/h</span></td><td class="num" data-label="条件"><strong>1,936</strong></td><td class="num" style="color:var(--orange);font-weight:700" data-label="USD 金额"><strong>1,936.00</strong></td><td class="num" data-label="稳定币 (USDT/USDC)"><strong>≈ ¥13,119</strong></td><td class="num" style="font-family:monospace;color:var(--text-sub)" data-label="USDT/CNY 参考"><strong>≈ 0.92015</strong></td></tr>
       </tbody>
     </table>
     <div style="font-size:11px;color:var(--text-sub);margin-top:10px">* ETH 估算以报价日（5/29）回溯 14 天均价 ≈ $2,104 计算，<strong>仅供参考</strong>。实际付款时以当日市价重新折算。USDT/CNY 参考汇率 6.7755（兑汇日期 2026/5/29，来源：WEEX）。</div>
@@ -545,12 +569,12 @@
     <table>
       <thead><tr><th>ETH 价格</th><th class="num">Phase 1 ETH</th><th class="num">Phase 2 ETH</th><th class="num">合计 ETH</th><th class="num">合计 CNY（USDT等值）</th><th>备注</th></tr></thead>
       <tbody>
-        <tr><td>$1,800</td><td class="num" style="font-family:monospace">0.75289</td><td class="num" style="font-family:monospace">0.32267</td><td class="num" style="font-family:monospace">1.07556</td><td class="num">≈ ¥13,119</td><td></td></tr>
-        <tr><td>$2,000</td><td class="num" style="font-family:monospace">0.67760</td><td class="num" style="font-family:monospace">0.29040</td><td class="num" style="font-family:monospace">0.96800</td><td class="num">≈ ¥13,119</td><td></td></tr>
-        <tr class="current-row"><td><strong>≈ $2,104 ← 14日均价参考</strong></td><td class="num" style="font-family:monospace"><strong>0.64411</strong></td><td class="num" style="font-family:monospace"><strong>0.27604</strong></td><td class="num" style="font-family:monospace"><strong>0.92015</strong></td><td class="num"><strong>≈ ¥13,119</strong></td><td>5/16–5/29 均价</td></tr>
-        <tr><td>$2,300</td><td class="num" style="font-family:monospace">0.58922</td><td class="num" style="font-family:monospace">0.25252</td><td class="num" style="font-family:monospace">0.84174</td><td class="num">≈ ¥13,119</td><td></td></tr>
-        <tr><td>$2,500</td><td class="num" style="font-family:monospace">0.54208</td><td class="num" style="font-family:monospace">0.23232</td><td class="num" style="font-family:monospace">0.77440</td><td class="num">≈ ¥13,119</td><td></td></tr>
-        <tr><td>$2,800</td><td class="num" style="font-family:monospace">0.48400</td><td class="num" style="font-family:monospace">0.20743</td><td class="num" style="font-family:monospace">0.69143</td><td class="num">≈ ¥13,119</td><td></td></tr>
+        <tr><td data-label="ETH 价格">$1,800</td><td class="num" style="font-family:monospace" data-label="Phase 1 ETH">0.75289</td><td class="num" style="font-family:monospace" data-label="Phase 2 ETH">0.32267</td><td class="num" style="font-family:monospace" data-label="合计 ETH">1.07556</td><td class="num" data-label="合计 CNY">≈ ¥13,119</td><td data-label="备注"></td></tr>
+        <tr><td data-label="ETH 价格">$2,000</td><td class="num" style="font-family:monospace" data-label="Phase 1 ETH">0.67760</td><td class="num" style="font-family:monospace" data-label="Phase 2 ETH">0.29040</td><td class="num" style="font-family:monospace" data-label="合计 ETH">0.96800</td><td class="num" data-label="合计 CNY">≈ ¥13,119</td><td data-label="备注"></td></tr>
+        <tr class="current-row"><td data-label="ETH 价格"><strong>≈ $2,104 ← 14日均价参考</strong></td><td class="num" style="font-family:monospace" data-label="Phase 1 ETH"><strong>0.64411</strong></td><td class="num" style="font-family:monospace" data-label="Phase 2 ETH"><strong>0.27604</strong></td><td class="num" style="font-family:monospace" data-label="合计 ETH"><strong>0.92015</strong></td><td class="num" data-label="合计 CNY"><strong>≈ ¥13,119</strong></td><td data-label="备注">5/16–5/29 均价</td></tr>
+        <tr><td data-label="ETH 价格">$2,300</td><td class="num" style="font-family:monospace" data-label="Phase 1 ETH">0.58922</td><td class="num" style="font-family:monospace" data-label="Phase 2 ETH">0.25252</td><td class="num" style="font-family:monospace" data-label="合计 ETH">0.84174</td><td class="num" data-label="合计 CNY">≈ ¥13,119</td><td data-label="备注"></td></tr>
+        <tr><td data-label="ETH 价格">$2,500</td><td class="num" style="font-family:monospace" data-label="Phase 1 ETH">0.54208</td><td class="num" style="font-family:monospace" data-label="Phase 2 ETH">0.23232</td><td class="num" style="font-family:monospace" data-label="合计 ETH">0.77440</td><td class="num" data-label="合计 CNY">≈ ¥13,119</td><td data-label="备注"></td></tr>
+        <tr><td data-label="ETH 价格">$2,800</td><td class="num" style="font-family:monospace" data-label="Phase 1 ETH">0.48400</td><td class="num" style="font-family:monospace" data-label="Phase 2 ETH">0.20743</td><td class="num" style="font-family:monospace" data-label="合计 ETH">0.69143</td><td class="num" data-label="合计 CNY">≈ ¥13,119</td><td data-label="备注"></td></tr>
       </tbody>
     </table>
   </div>
@@ -607,22 +631,22 @@
       <thead><tr><th style="width:12%">版本</th><th style="width:16%">日期</th><th style="width:16%">总工时 / 总价</th><th>变更说明</th></tr></thead>
       <tbody>
         <tr>
-          <td><strong>V1</strong></td>
-          <td style="color:var(--text-sub)">2026/4 初</td>
-          <td class="num" style="color:var(--text-sub)">— / —</td>
-          <td style="color:var(--text-sub)">初版报价草稿，基于社群基金方案，核心模块估算 44 小时，未含沟通与风险工时</td>
+          <td data-label="版本"><strong>V1</strong></td>
+          <td style="color:var(--text-sub)" data-label="日期">2026/4 初</td>
+          <td class="num" style="color:var(--text-sub)" data-label="总工时 / 总价">— / —</td>
+          <td style="color:var(--text-sub)" data-label="变更说明">初版报价草稿，基于社群基金方案，核心模块估算 44 小时，未含沟通与风险工时</td>
         </tr>
         <tr>
-          <td><strong>V2</strong></td>
-          <td>2026/5/1</td>
-          <td class="num">80h / $1,760</td>
-          <td>正式报价。核心开发 64h + 沟通备用 16h；含功能范围声明、双技术路线（OAuth 主 / API 备）、付款计划</td>
+          <td data-label="版本"><strong>V2</strong></td>
+          <td data-label="日期">2026/5/1</td>
+          <td class="num" data-label="总工时 / 总价">80h / $1,760</td>
+          <td data-label="变更说明">正式报价。核心开发 64h + 沟通备用 16h；含功能范围声明、双技术路线（OAuth 主 / API 备）、付款计划</td>
         </tr>
         <tr class="current-row">
-          <td><strong>V3</strong></td>
-          <td><strong>2026/5/29</strong></td>
-          <td class="num"><strong>88h / $1,936</strong></td>
-          <td>依据 5/29 会议决议（#373984141）：增加 8h 社区 Handover 沟通工时；范围声明补充 (d) 双技术路线条款；付款计划改为稳定币优先，更新 ETH 14日均价（5/16–5/29 ≈ $2,104），新增 USDT/USDC/CNY 参考汇率（兑汇日期 2026/5/29）</td>
+          <td data-label="版本"><strong>V3</strong></td>
+          <td data-label="日期"><strong>2026/5/29</strong></td>
+          <td class="num" data-label="总工时 / 总价"><strong>88h / $1,936</strong></td>
+          <td data-label="变更说明">依据 5/29 会议决议（#373984141）：增加 8h 社区 Handover 沟通工时；范围声明补充 (d) 双技术路线条款；付款计划改为稳定币优先，更新 ETH 14日均价（5/16–5/29 ≈ $2,104），新增 USDT/USDC/CNY 参考汇率（兑汇日期 2026/5/29）</td>
         </tr>
       </tbody>
     </table>
@@ -640,16 +664,16 @@
         <thead><tr><th style="width:22%">议题</th><th>纪要要点</th></tr></thead>
         <tbody>
           <tr>
-            <td><strong>工时调整决议</strong><br><span style="font-size:11px;color:var(--teal)">主动议 · 表决通过</span><br><span style="font-size:10px;color:var(--text-sub)">赞成 2 票 / 反对 0 票</span></td>
-            <td style="font-size:12.5px;line-height:1.75">开发范围与报价单功能范围声明一致；将工时从 80 小时调整为 88 小时，增加的 8 小时用于沟通，按 $22/h 计算；合并当前价格支付至指定位置；其余参考 V2 报价单内容</td>
+            <td data-label="议题"><strong>工时调整决议</strong><br><span style="font-size:11px;color:var(--teal)">主动议 · 表决通过</span><br><span style="font-size:10px;color:var(--text-sub)">赞成 2 票 / 反对 0 票</span></td>
+            <td style="font-size:12.5px;line-height:1.75" data-label="纪要要点">开发范围与报价单功能范围声明一致；将工时从 80 小时调整为 88 小时，增加的 8 小时用于沟通，按 $22/h 计算；合并当前价格支付至指定位置；其余参考 V2 报价单内容</td>
           </tr>
           <tr>
-            <td><strong>Handover 背景</strong><br><span style="font-size:11px;color:var(--orange)">自由讨论 5</span></td>
-            <td style="font-size:12.5px;line-height:1.75">FC 说明：开发社区在交接过程中提供的版本、文件信息不一致，导致开发者在等待与核对上耗费了额外时间；难度不在技术层面，而在社区内部 Handover 流程的信息成本。此部分未含于 V2，因此以 +8h 补足</td>
+            <td data-label="议题"><strong>Handover 背景</strong><br><span style="font-size:11px;color:var(--orange)">自由讨论 5</span></td>
+            <td style="font-size:12.5px;line-height:1.75" data-label="纪要要点">FC 说明：开发社区在交接过程中提供的版本、文件信息不一致，导致开发者在等待与核对上耗费了额外时间；难度不在技术层面，而在社区内部 Handover 流程的信息成本。此部分未含于 V2，因此以 +8h 补足</td>
           </tr>
           <tr>
-            <td><strong>双技术路线确认</strong><br><span style="font-size:11px;color:var(--teal)">修正案 1.1 · 默认一致同意</span></td>
-            <td style="font-size:12.5px;line-height:1.75">在 SEMI 集成中，确保 CI 主动提供 API 与 OS OAuth 时两条通道均可连通，以 OS OAuth 为主要方式；API 路线作为降级备用</td>
+            <td data-label="议题"><strong>双技术路线确认</strong><br><span style="font-size:11px;color:var(--teal)">修正案 1.1 · 默认一致同意</span></td>
+            <td style="font-size:12.5px;line-height:1.75" data-label="纪要要点">在 SEMI 集成中，确保 CI 主动提供 API 与 OS OAuth 时两条通道均可连通，以 OS OAuth 为主要方式；API 路线作为降级备用</td>
           </tr>
         </tbody>
       </table>
@@ -664,16 +688,16 @@
         <thead><tr><th style="width:22%">议题</th><th>纪要要点</th></tr></thead>
         <tbody>
           <tr>
-            <td><strong>SEMI 钱包长期发展</strong><br><span style="font-size:11px;color:var(--teal)">主动议 1.1 · 默认一致同意</span></td>
-            <td style="font-size:12.5px;line-height:1.75">推动 SEMI 钱包开源社区发展，吸引更多开发者参与；加强与区块链的互动能力，改善社区开发能力与氛围，促进长期发展</td>
+            <td data-label="议题"><strong>SEMI 钱包长期发展</strong><br><span style="font-size:11px;color:var(--teal)">主动议 1.1 · 默认一致同意</span></td>
+            <td style="font-size:12.5px;line-height:1.75" data-label="纪要要点">推动 SEMI 钱包开源社区发展，吸引更多开发者参与；加强与区块链的互动能力，改善社区开发能力与氛围，促进长期发展</td>
           </tr>
           <tr>
-            <td><strong>iMeeting × SEMI 共同用户机制</strong><br><span style="font-size:11px;color:var(--teal)">主动议 1.2 · 赞成 2 票</span></td>
-            <td style="font-size:12.5px;line-height:1.75">① 在登录功能基础上增加备忘录；② 追加功能点讨论清晰后随后报价进入开发排程，否则基础报价直接推进；③ 探讨除 SEMI 钱包外其他钱包（MetaMask、imToken 等）加入的情况，须先梳理产品设计逻辑与生态</td>
+            <td data-label="议题"><strong>iMeeting × SEMI 共同用户机制</strong><br><span style="font-size:11px;color:var(--teal)">主动议 1.2 · 赞成 2 票</span></td>
+            <td style="font-size:12.5px;line-height:1.75" data-label="纪要要点">① 在登录功能基础上增加备忘录；② 追加功能点讨论清晰后随后报价进入开发排程，否则基础报价直接推进；③ 探讨除 SEMI 钱包外其他钱包（MetaMask、imToken 等）加入的情况，须先梳理产品设计逻辑与生态</td>
           </tr>
           <tr>
-            <td><strong>Web3 合同与表决机制</strong><br><span style="font-size:11px;color:var(--teal)">主动议 2.1 · 赞成 2 票</span></td>
-            <td style="font-size:12.5px;line-height:1.75">探讨基于 iMeeting 的数字身份表决与合同机制：表决确认 → 资金扣入决议 → 转化电子合同 → 智能合约执行；推动 Web3 方向，需评估法律风险</td>
+            <td data-label="议题"><strong>Web3 合同与表决机制</strong><br><span style="font-size:11px;color:var(--teal)">主动议 2.1 · 赞成 2 票</span></td>
+            <td style="font-size:12.5px;line-height:1.75" data-label="纪要要点">探讨基于 iMeeting 的数字身份表决与合同机制：表决确认 → 资金扣入决议 → 转化电子合同 → 智能合约执行；推动 Web3 方向，需评估法律风险</td>
           </tr>
         </tbody>
       </table>
