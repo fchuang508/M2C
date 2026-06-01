@@ -307,6 +307,40 @@ body {
 .c-red    { border-color: #e05252; background: #fdecea; color: #8a2020; }
 .c-red strong { color: #c0321c; }
 
+.version-links {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 200;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  max-width: min(360px, calc(100vw - 36px));
+}
+.version-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 18px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 8px 22px rgba(30,28,23,.16);
+}
+.version-links a.secondary {
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--border);
+}
+@media(max-width: 720px){
+  .version-links { right: 12px; bottom: 12px; }
+  .version-links a { min-height: 34px; padding: 0 10px; font-size: 11px; }
+}
+
 
 /* M2C quotation version footbar */
 
@@ -897,19 +931,18 @@ rb();
     <button class="m2c-copy-url" type="button" data-m2c-copy-url data-url="https://fchuang508.github.io/M2C/02-imeeting-onboarding-video/">复制</button>
   </div>
   <div class="m2c-version-list">
-    <a class="m2c-version-item" href="./index.html"><span>最新报价单</span><span class="m2c-version-badge">固定入口</span></a>
-    <a class="m2c-version-item" href="./quotation-of-imeeting-onboarding-video.html" aria-current="page"><span>Q-20260529-v1</span><span class="m2c-version-badge">当前页 · 版本档案</span></a>
+    <a class="m2c-version-item" href="./index.html" aria-current="page"><span>最新报价单</span><span class="m2c-version-badge">固定入口</span></a>
+    <a class="m2c-version-item" href="./quotation-of-imeeting-onboarding-video.html"><span>Q-20260529-v1</span><span class="m2c-version-badge">版本档案</span></a>
   </div>
 </div>
 <footer class="m2c-version-footbar" aria-label="报价单页脚">
   <div class="m2c-version-inner">
     <div>
       <div class="m2c-version-kicker">M2C · 02 iMeeting Onboarding 视频</div>
-      <div class="m2c-version-title">当前显示：版本档案 Q-20260529-v1</div>
+      <div class="m2c-version-title">当前显示：最新正式报价单 · Q-20260529-v1</div>
     </div>
     <div class="m2c-version-actions">
       <button class="m2c-copy-url" type="button" data-m2c-copy-url data-m2c-copy-url-footbar data-url="https://fchuang508.github.io/M2C/02-imeeting-onboarding-video/">复制网址</button>
-      <a class="m2c-version-link primary" href="./index.html">最新</a>
       <button class="m2c-version-toggle" type="button" data-m2c-version-toggle aria-expanded="false">版本</button>
     </div>
   </div>
