@@ -265,6 +265,13 @@ body {
 .phase-ref  { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 10px; }
 .phase-trig { font-size: 11px; color: var(--muted); line-height: 1.6; border-top: 1px solid var(--border); padding-top: 9px; }
 .phase-trig strong { color: var(--ink2); }
+.phase-task-link {
+  display: inline-flex; align-items: center; justify-content: center; margin-top: 10px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--ink2);
+  font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
+  text-decoration: none; padding: 7px 10px; transition: all .15s;
+}
+.phase-task-link:hover { border-color: var(--orange); background: var(--orange-bg); color: var(--orange); }
 
 /* ── SENS TABLE ── */
 .sens { width: 100%; border-collapse: collapse; font-size: 11px; font-family: var(--mono); margin-bottom: 18px; }
@@ -726,6 +733,7 @@ body {
         <div style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:5px">0 Day · 生效日</div>
         <strong>主动议生效</strong>，双方确认启动即拨付。
       </div>
+      <a class="phase-task-link" href="https://bai.ntdao.xyz/tasks/b3498b75-0272-46b8-8f35-c5709d1d2a2a" target="_blank" rel="noopener" aria-label="领取 Phase 1 积分兑换任务">领取任务</a>
     </div>
     <div class="phase-card p2">
       <div class="phase-tag">Phase 2 · 中期款 · 50%</div>
@@ -737,6 +745,7 @@ body {
         · 10个选题确认定稿<br>
         · 前3期（3支）成片制作并完成发布
       </div>
+      <a class="phase-task-link" href="https://bai.ntdao.xyz/tasks/71d192bf-372a-42f8-b7a4-bd7dc096fd38" target="_blank" rel="noopener" aria-label="领取 Phase 2 积分兑换任务">领取任务</a>
     </div>
     <div class="phase-card p3">
       <div class="phase-tag">Phase 3 · 尾款 · 30%</div>
@@ -745,6 +754,7 @@ body {
         <div style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6a8a00;margin-bottom:5px">全部完成验收</div>
         <strong>10支视频全部制作完成</strong>，含可编辑档案，逐步发布完毕后结清。
       </div>
+      <a class="phase-task-link" href="https://bai.ntdao.xyz/tasks/b5d924e8-a244-41d6-be9a-7016007fc419" target="_blank" rel="noopener" aria-label="领取 Phase 3 积分兑换任务">领取任务</a>
     </div>
   </div>
 
