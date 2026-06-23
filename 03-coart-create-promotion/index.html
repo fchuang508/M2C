@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Co-Art Create Promotion · 艺术共创营系列宣传框架 · 共创出资约定 · M2C 03</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;600&family=Noto+Sans+SC:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ── LUOBO VI TOKENS ── */
+:root{
+  --orange:#e99123; --teal:#37afa9; --grass:#bace39; --gray:#a9afb7; --yellow:#ffc300;
+  --bg:#f7f5f0; --surface:#eeebe3; --card:#ffffff; --border:#ddd9ce; --border2:#eae7df;
+  --ink:#1e1c17; --ink2:#3d3a30; --muted:#797060; --dim:#b0a990;
+  --orange-bg:#fef4e5; --teal-bg:#e5f5f4; --grass-bg:#f3f7e0; --gray-bg:#f2f3f4; --yellow-bg:#fffbe5;
+  --mono:'IBM Plex Mono',monospace; --sans:'Noto Sans SC',sans-serif; --serif:'Noto Serif SC',serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;font-size:14px;line-height:1.7;min-height:100vh;padding-bottom:80px;}
+
+/* ── NAV ── */
+.tab-nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,.97);backdrop-filter:blur(10px);border-bottom:2px solid var(--border);display:flex;padding:0 40px;overflow-x:auto;gap:0;}
+.tab-btn{padding:14px 22px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .18s;white-space:nowrap;flex-shrink:0;}
+.tab-btn:hover{color:var(--ink);}
+.tab-btn.active{color:var(--teal);border-bottom-color:var(--teal);font-weight:600;}
+.tab-idx{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:3px;background:var(--teal-bg);color:var(--teal);font-size:9px;font-weight:600;margin-right:7px;}
+
+/* ── PANEL ── */
+.panel{display:none;padding:44px 40px;max-width:1040px;margin:0 auto;}
+.panel.active{display:block;}
+
+/* ── PAGE HEADER ── */
+.pg-header{display:flex;align-items:flex-start;gap:18px;margin-bottom:32px;}
+.pg-icon{flex-shrink:0;width:50px;height:50px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.06em;text-align:center;line-height:1.3;border:2px solid;margin-top:2px;}
+.icon-brief{color:var(--teal);border-color:var(--teal);}
+.icon-people{color:var(--orange);border-color:var(--orange);}
+.icon-scope{color:#6a8a00;border-color:var(--grass);}
+.icon-pact{color:var(--teal);border-color:var(--teal);}
+.icon-note{color:var(--gray);border-color:var(--gray);}
+.pg-text{flex:1;}
+.pg-eyebrow{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:4px;}
+.pg-title{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--ink);line-height:1.2;}
+.pg-sub{font-size:12px;color:var(--muted);margin-top:4px;}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--orange-bg) 0%,#f9f8f3 55%,var(--teal-bg) 100%);border:1px solid var(--border);border-top:3px solid var(--orange);padding:30px 34px 26px;margin-bottom:22px;position:relative;overflow:hidden;}
+.hero::after{content:'';position:absolute;top:-30px;right:-30px;width:140px;height:140px;background:radial-gradient(circle,rgba(233,145,35,.07) 0%,transparent 70%);pointer-events:none;}
+.hero-eyebrow{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:7px;}
+.hero-name{font-family:var(--serif);font-size:26px;font-weight:900;color:var(--ink);line-height:1.15;margin-bottom:4px;}
+.hero-sub{font-family:var(--mono);font-size:11px;color:var(--orange);margin-bottom:16px;}
+.hero-desc{font-size:13px;color:var(--ink2);line-height:1.9;max-width:600px;}
+.hero-desc .hl{background:linear-gradient(transparent 60%,rgba(255,195,0,.45) 60%);padding:0 2px;font-weight:500;color:var(--ink);}
+.hero-desc strong{color:var(--ink);font-weight:600;}
+.hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-top:20px;}
+.hg-cell{background:var(--card);padding:11px 14px;}
+.hg-l{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-bottom:3px;}
+.hg-v{font-size:13px;font-weight:500;color:var(--ink);}
+.hg-v.orange{color:var(--orange);} .hg-v.teal{color:var(--teal);} .hg-v.grass{color:#6a8a00;}
+
+/* ── SECTION LABEL ── */
+.sl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:8px 14px;margin-bottom:10px;border-left:3px solid;}
+.sl-teal{background:var(--teal-bg);color:var(--teal);border-color:var(--teal);}
+.sl-orange{background:var(--orange-bg);color:var(--orange);border-color:var(--orange);}
+.sl-grass{background:var(--grass-bg);color:#6a8a00;border-color:var(--grass);}
+.sl-gray{background:var(--gray-bg);color:#5a6070;border-color:var(--gray);}
+.sl-yellow{background:var(--yellow-bg);color:#8a6a00;border-color:var(--yellow);}
+
+/* ── PARTY / CREATOR CARDS ── */
+.party-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.party-card{background:var(--card);border:1px solid var(--border);border-top:2px solid;padding:18px 20px;}
+.party-card.c-own{border-top-color:var(--orange);}
+.party-card.c-use{border-top-color:var(--teal);}
+.party-role{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px;}
+.c-own .party-role{color:var(--orange);} .c-use .party-role{color:var(--teal);}
+.party-name{font-size:16px;font-weight:600;color:var(--ink);}
+.party-name .alt{font-family:var(--mono);font-size:11px;color:var(--muted);font-weight:400;margin-left:7px;}
+.give-block{margin-top:11px;}
+.gb-l{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-bottom:5px;}
+.gb-list{font-size:12px;color:var(--muted);line-height:1.75;padding-left:15px;}
+.gb-list li{margin-bottom:2px;}
+.take-block{margin-top:13px;padding-top:12px;border-top:1px solid var(--border2);}
+.tk{font-size:13px;color:var(--ink2);}
+.tk b.own{color:var(--orange);font-weight:600;} .tk b.use{color:var(--teal);font-weight:600;}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.09em;padding:2px 7px;text-transform:uppercase;margin-top:9px;margin-right:4px;border:1px solid;}
+.tag-orange{background:var(--orange-bg);color:var(--orange);border-color:var(--orange);}
+.tag-teal{background:var(--teal-bg);color:var(--teal);border-color:var(--teal);}
+.tag-grass{background:var(--grass-bg);color:#6a8a00;border-color:var(--grass);}
+
+/* ── EXCHANGE FLOW ── */
+.exch{background:var(--card);border:1px solid var(--border);padding:16px;margin-bottom:18px;}
+.exch svg{width:100%;height:auto;display:block;}
+.exch-cap{font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--dim);text-align:center;margin-top:8px;text-transform:uppercase;}
+
+/* ── MOTION QUOTE ── */
+.motion-wrap{background:var(--card);border:1px solid var(--border);margin-bottom:20px;}
+.motion-src{background:var(--ink);color:rgba(255,255,255,.5);font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;padding:7px 16px;}
+.motion-quote{border-left:4px solid var(--orange);margin:16px;background:var(--orange-bg);padding:16px 20px;}
+.mq-label{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:9px;}
+.mq-text{font-family:var(--serif);font-size:13px;line-height:2.05;color:var(--ink);}
+.mq-text strong{font-weight:700;}
+.vote-bar{display:flex;align-items:center;gap:10px;padding:11px 16px;background:var(--grass-bg);border-top:1px solid var(--border);flex-wrap:wrap;}
+.vote-result{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:#6a8a00;font-weight:600;}
+.vote-chip{font-family:var(--mono);font-size:9px;padding:3px 9px;background:#fff;border:1px solid var(--grass);color:#6a8a00;}
+
+/* ── SCOPE ROWS ── */
+.scope-wrap{background:var(--card);border:1px solid var(--border);margin-bottom:16px;}
+.scope-row{display:grid;grid-template-columns:150px 1fr;gap:10px;padding:11px 16px;border-bottom:1px solid var(--border2);font-size:12px;}
+.scope-row:last-child{border-bottom:none;}
+.scope-row .k{color:var(--ink2);font-weight:500;}
+.scope-row .v{color:var(--muted);line-height:1.65;}
+.scope-row.head{background:var(--surface);font-family:var(--mono);font-size:9px;letter-spacing:.11em;color:var(--dim);}
+
+/* ── KV / GOAL / CALLOUT / WHY ── */
+.why-block{background:var(--card);border:1px solid var(--border);padding:20px 24px;margin-bottom:14px;}
+.why-q{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.why-q::before{content:'';width:16px;height:1px;background:var(--gray);display:inline-block;flex-shrink:0;}
+.why-body{font-size:13px;line-height:1.9;color:var(--ink2);}
+.why-body strong{font-weight:600;color:var(--ink);}
+.goal-box{border-left:3px solid var(--orange);padding:12px 16px;background:var(--orange-bg);margin:10px 0;font-size:13px;line-height:1.8;color:var(--ink2);}
+.goal-box .gl{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--orange);margin-bottom:5px;}
+.kv-row{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--border2);font-size:13px;}
+.kv-row:last-child{border-bottom:none;}
+.kv-k{color:var(--muted);min-width:96px;flex-shrink:0;}
+.kv-v{color:var(--ink2);}
+.callout{border-left:3px solid;padding:11px 15px;font-size:12px;line-height:1.75;margin:12px 0;}
+.callout strong{font-weight:600;}
+.c-teal{border-color:var(--teal);background:var(--teal-bg);color:var(--teal);}
+.c-orange{border-color:var(--orange);background:var(--orange-bg);color:#8a4a00;}
+.c-orange strong{color:var(--orange);}
+.c-grass{border-color:var(--grass);background:var(--grass-bg);color:#3a5200;}
+.c-grass strong{color:#6a8a00;}
+.c-yellow{border-color:var(--yellow);background:var(--yellow-bg);color:#7a5a14;}
+.c-yellow strong{color:#8a6a00;}
+.pill{display:inline-block;font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:999px;background:var(--yellow-bg);color:#8a6a00;border:1px solid var(--yellow);letter-spacing:.04em;margin-left:4px;}
+
+/* ── CLAUSES ── */
+.clauses{counter-reset:c;list-style:none;}
+.clauses li{position:relative;padding:14px 16px 14px 52px;background:var(--card);border:1px solid var(--border);margin-bottom:10px;font-size:13px;line-height:1.8;color:var(--ink2);}
+.clauses li::before{counter-increment:c;content:counter(c,cjk-ideographic);position:absolute;left:14px;top:13px;width:26px;height:26px;background:var(--ink);color:var(--bg);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;font-size:13px;}
+.clauses li strong{color:var(--ink);font-weight:600;}
+
+/* ── SIGNATURES ── */
+.sign-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
+.sign{background:var(--card);border:1px solid var(--border);padding:16px;min-height:96px;display:flex;flex-direction:column;justify-content:space-between;}
+.sign .nm{font-family:var(--serif);font-size:15px;font-weight:700;color:var(--ink);}
+.sign .alt{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:2px;}
+.sign .ln{margin-top:22px;border-top:1px dashed var(--border);padding-top:6px;font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--dim);text-transform:uppercase;}
+.sign-date{margin-top:16px;text-align:right;font-family:var(--mono);font-size:11px;color:var(--muted);}
+
+/* ── PMBOK FIG (reference, muted) ── */
+.ref-fig{background:var(--card);border:1px solid var(--border);padding:16px 14px 12px;opacity:.96;}
+.ref-fig svg{width:100%;height:auto;display:block;}
+.ref-cap{font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--dim);text-align:center;margin-top:8px;text-transform:uppercase;}
+.ref-legend{display:flex;flex-wrap:wrap;gap:5px 14px;justify-content:center;margin-top:11px;}
+.ref-legend span{font-family:var(--mono);font-size:9px;color:var(--muted);display:inline-flex;align-items:center;gap:5px;letter-spacing:.04em;}
+.ref-legend i{width:9px;height:9px;border-radius:2px;}
+
+/* M2C version footbar */
+.m2c-index-url{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin:0 0 12px;padding:10px 12px;border:1px solid #e5e7eb;border-radius:12px;background:#f8fafc;}
+.m2c-index-url code{color:#374151;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.m2c-copy-url{min-height:34px;display:inline-flex;align-items:center;justify-content:center;padding:0 12px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;font:inherit;font-size:12px;font-weight:800;cursor:pointer;}
+.m2c-index-url .m2c-copy-url{color:#111827;background:#fff;border-color:#d1d5db;}
+@media(max-width:640px){.m2c-index-url{grid-template-columns:1fr;}.m2c-index-url code{white-space:normal;word-break:break-all;}}
+.m2c-version-spacer{height:86px;}
+.m2c-version-footbar{position:fixed;left:0;right:0;bottom:0;z-index:500;display:flex;justify-content:center;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(18,22,28,.88);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.14);box-shadow:0 -14px 36px rgba(0,0,0,.18);}
+.m2c-version-inner{width:min(1040px,100%);display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;}
+.m2c-version-kicker{color:rgba(255,255,255,.58);font-size:11px;font-weight:700;}
+.m2c-version-title{margin-top:3px;color:#fff;font-size:14px;font-weight:800;}
+.m2c-version-actions{display:flex;gap:8px;align-items:center;}
+.m2c-version-toggle{min-height:38px;display:inline-flex;align-items:center;justify-content:center;padding:0 14px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;font:inherit;font-size:13px;font-weight:800;cursor:pointer;}
+.m2c-version-panel{position:fixed;left:50%;bottom:calc(76px + env(safe-area-inset-bottom));z-index:499;width:min(520px,calc(100% - 32px));padding:14px;border-radius:18px;background:#fff;color:#1f2937;box-shadow:0 22px 70px rgba(0,0,0,.24);transform:translate(-50%,18px);opacity:0;pointer-events:none;transition:transform .18s ease,opacity .18s ease;}
+.m2c-version-panel.open{transform:translate(-50%,0);opacity:1;pointer-events:auto;}
+.m2c-version-panel-title{padding:2px 4px 10px;color:#6b7280;font-size:12px;font-weight:800;}
+.m2c-version-list{display:grid;gap:8px;}
+.m2c-version-item{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;padding:0 12px;border:1px solid #e5e7eb;border-radius:12px;color:#1f2937;text-decoration:none;font-size:13px;font-weight:800;}
+.m2c-version-item[aria-current="page"]{border-color:#37afa9;background:#edf8f8;}
+.m2c-version-badge{color:#6b7280;font-size:11px;font-weight:800;}
+@media(max-width:640px){.m2c-version-inner{grid-template-columns:1fr;gap:8px;}.m2c-version-actions{justify-content:space-between;}.m2c-version-toggle{flex:1;min-height:36px;}.m2c-version-panel{bottom:calc(118px + env(safe-area-inset-bottom));}.m2c-version-spacer{height:124px;}}
+
+@media(max-width:680px){
+  .tab-nav{padding:0 16px;} .panel{padding:30px 18px;}
+  .party-grid{grid-template-columns:1fr;} .sign-grid{grid-template-columns:1fr;}
+  .scope-row{grid-template-columns:1fr;gap:3px;}
+}
+a{color:var(--teal);text-decoration:none;} a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="sw('p1',this)"><span class="tab-idx">1</span>共创概览 Brief</button>
+  <button class="tab-btn" onclick="sw('p2',this)"><span class="tab-idx">2</span>共创人 Co-creators</button>
+  <button class="tab-btn" onclick="sw('p3',this)"><span class="tab-idx">3</span>范围·交付 Scope</button>
+  <button class="tab-btn" onclick="sw('p4',this)"><span class="tab-idx">4</span>共同约定 Covenant</button>
+  <button class="tab-btn" onclick="sw('p5',this)"><span class="tab-idx">5</span>备注·引用 Notes</button>
+</nav>
+
+<!-- ══ PAGE 1 — BRIEF ══ -->
+<div id="p1" class="panel active">
+  <div class="pg-header">
+    <div class="pg-icon icon-brief">COVE<br>NANT</div>
+    <div class="pg-text">
+      <div class="pg-eyebrow">Co-Art Create Promotion · Resolution → Covenant</div>
+      <div class="pg-title">艺术共创营系列宣传框架</div>
+      <div class="pg-sub">共创出资约定 · 缘起 · 决议来源 · 表决结果</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Project Code · COART-CREATE-PROMOTION-03 · 共创出资约定</div>
+    <div class="hero-name">这不是一份买卖</div>
+    <div class="hero-sub">Co-Art Create Promotion · Dao 南塘艺术共创营（第三期）</div>
+    <div class="hero-desc">
+      本约定记录的，是一群朋友为「艺术共创营系列宣传框架」这件共同的事，<span class="hl">各自拿出手上不一样的资源</span>——算力、空间、劳务、方法、素材——彼此交换、共同建造。我们以此<strong>打破各自为政的原子状态</strong>，把个体编织进一个可以延续的社群。在这份约定里，每一位都是平行的<strong>共创人</strong>，而非彼此的甲方或乙方；出资不等于出钱，积分只是资源的一种计量，不是价款。
+    </div>
+    <div class="hero-grid">
+      <div class="hg-cell" style="grid-column:1/-1">
+        <div class="hg-l">决议来源</div>
+        <div class="hg-v" style="font-size:12px;line-height:1.7">本约定依据 Dao 南塘艺术共创营（第三期）会议 #308247877 形成：「艺术共创营系列宣传框架」｜2026 年 6 月 21 日 14:53–16:29｜iMeeting｜提议人：FC。</div>
+      </div>
+      <div class="hg-cell"><div class="hg-l">会议效力</div><div class="hg-v">亲自出席 2 票 · 有效</div></div>
+      <div class="hg-cell"><div class="hg-l">表决结果</div><div class="hg-v grass">主动议通过 2:0</div></div>
+      <div class="hg-cell"><div class="hg-l">交付期限</div><div class="hg-v teal">6/23 晚前</div></div>
+      <div class="hg-cell"><div class="hg-l">对价（暂定）</div><div class="hg-v orange">1200 豆 + 600 丁</div></div>
+    </div>
+  </div>
+
+  <div class="sl sl-orange">▌ 主动议原文（会议纪要完整引用）</div>
+  <div class="motion-wrap">
+    <div class="motion-src">主动议原文 · Original Motion · 以下内容引用自会议纪要，保持原意</div>
+    <div class="motion-quote">
+      <div class="mq-label">◆ 主动议原文（引用）</div>
+      <div class="mq-text">
+        <strong>一、</strong>以艺术共创营系列宣传框架为基础，形成自适应窄屏（手机优先）的呈现方案，覆盖第一、二、三期，纳入已办内容及第四期即将举办的内容，以 prototype 方式迭代；工作范围限定为第三期基础背景完成。<br><br>
+        <strong>二、</strong>各期页面基础结构与链接点：一、二期以过往作品集与画廊呈现为主；第三期含画廊与「议事」成果。Level one 页面作为进入基础页；页面档头介绍共创营是什么、缘起、历程、当前状况、伙伴关系，并拉入砚仁系列共创。<br><br>
+        <strong>三、</strong>目标构建「100 位共创人」基础，为第四期宣传承接。<br><br>
+        <strong>四、</strong>推进周期：6 月 22 日开始，至 23 日晚前完成，约 24 小时工作当量，三天周期。<br><br>
+        <strong>五、</strong>授权与资源支持：提案人（FC）提供有限 AI 工具与能力（ChatGPT、Cloud Code、Propensity API、Talk API Key 等）、域名、固定 IP、网页空间；预算限定为共同认同的积分 1200 个南糖豆及 600 个萝卜丁，打给淑慧（支付数额以会后进一步修正为准）。
+      </div>
+    </div>
+    <div class="vote-bar">
+      <span class="vote-result">✓ 决议结果：2:0 通过</span>
+      <span class="vote-chip">跳跳 · 1票 · 赞成</span>
+      <span class="vote-chip">和光同尘 · 1票 · 赞成</span>
+      <span style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-left:4px">反对：0票</span>
+    </div>
+  </div>
+
+  <div class="callout c-teal"><strong>为什么把它做成共创约定，而不是报价单：</strong>各人投入的资源性质不同（资金/资源、劳务、方法、素材），换回的权益也不同（所有权、使用权、积分回报）。这是一次共同交换，目的在于把原子化的个体织进可延续的社群——这一点比任何单笔交易都更重要。</div>
+</div>
+
+<!-- ══ PAGE 2 — CO-CREATORS ══ -->
+<div id="p2" class="panel">
+  <div class="pg-header">
+    <div class="pg-icon icon-people">CO<br>CREATE</div>
+    <div class="pg-text">
+      <div class="pg-eyebrow">Who · Resource → Right</div>
+      <div class="pg-title">共创人 · 资源投入 → 权益</div>
+      <div class="pg-sub">各拿所长，共同交换，权益分承</div>
+    </div>
+  </div>
+
+  <div class="exch">
+    <svg viewBox="0 0 720 300" role="img" aria-label="四位共创人投入汇向共创成果">
+      <defs><marker id="fIn" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#b0a990"/></marker></defs>
+      <circle cx="360" cy="150" r="58" fill="#fef4e5" stroke="#e99123" stroke-width="2.4"/>
+      <text x="360" y="144" text-anchor="middle" font-family="'Noto Serif SC',serif" font-weight="900" font-size="14" fill="#b56b15">共创成果</text>
+      <text x="360" y="163" text-anchor="middle" font-size="9" fill="#9a6512">艺术共创营宣传框架</text>
+      <path d="M150,66 C240,92 282,116 306,128" fill="none" stroke="#e99123" stroke-width="2" marker-end="url(#fIn)" opacity=".65"/>
+      <path d="M570,66 C480,92 438,116 414,128" fill="none" stroke="#bace39" stroke-width="2" marker-end="url(#fIn)" opacity=".65"/>
+      <path d="M150,234 C240,208 284,184 306,172" fill="none" stroke="#37afa9" stroke-width="2" marker-end="url(#fIn)" opacity=".65"/>
+      <path d="M570,234 C480,208 436,184 414,172" fill="none" stroke="#a9afb7" stroke-width="2" marker-end="url(#fIn)" opacity=".65"/>
+      <g><circle cx="120" cy="58" r="30" fill="#e99123"/><text x="120" y="64" text-anchor="middle" font-family="'Noto Serif SC',serif" font-weight="900" font-size="15" fill="#fff">FC</text><text x="120" y="106" text-anchor="middle" font-size="10" fill="#3d3a30">富章 · 资源+积分</text></g>
+      <g><circle cx="600" cy="58" r="30" fill="#bace39"/><text x="600" y="64" text-anchor="middle" font-family="'Noto Serif SC',serif" font-weight="900" font-size="13" fill="#2a3410">淑慧</text><text x="600" y="106" text-anchor="middle" font-size="10" fill="#3d3a30">和光同尘 · 劳务</text></g>
+      <g><circle cx="120" cy="242" r="30" fill="#37afa9"/><text x="120" y="248" text-anchor="middle" font-family="'Noto Serif SC',serif" font-weight="900" font-size="13" fill="#fff">跳跳</text><text x="120" y="206" text-anchor="middle" font-size="10" fill="#3d3a30">议事 · 方法</text></g>
+      <g><circle cx="600" cy="242" r="30" fill="#a9afb7"/><text x="600" y="248" text-anchor="middle" font-family="'Noto Serif SC',serif" font-weight="900" font-size="13" fill="#fff">砚仁</text><text x="600" y="206" text-anchor="middle" font-size="10" fill="#3d3a30">素材 · 作品集</text></g>
+    </svg>
+    <div class="exch-cap">投入汇聚 → 共创成果 · 权益各自承接（非两两买卖）</div>
+  </div>
+
+  <div class="sl sl-orange">▌ 权属方 · 投入资金/资源，换得所有权</div>
+  <div class="party-grid">
+    <div class="party-card c-own">
+      <div class="party-role">权属方 · 资金 + 资源股</div>
+      <div class="party-name">富章<span class="alt">FC · iMeeting</span></div>
+      <div class="give-block">
+        <div class="gb-l">投入 Resource In</div>
+        <ul class="gb-list">
+          <li>积分资源：1200 南糖豆 + 600 萝卜丁</li>
+          <li>AI 工具与算力：ChatGPT、Cloud Code、Propensity API、Talk API Key</li>
+          <li>域名、固定 IP、网页空间</li>
+          <li>缘起 · 历程文字</li>
+        </ul>
+      </div>
+      <div class="take-block"><div class="tk"><b class="own">代码库所有权</b> + 后续迭代权（含使用权）</div></div>
+      <span class="tag tag-orange">所有权</span><span class="tag tag-orange">迭代权</span>
+    </div>
+    <div class="party-card c-use">
+      <div class="party-role">劳务方 · 收款 + 使用权</div>
+      <div class="party-name">淑慧<span class="alt">和光同尘 · iMeeting</span></div>
+      <div class="give-block">
+        <div class="gb-l">投入 Resource In</div>
+        <ul class="gb-list">
+          <li>前端页面开发与设计</li>
+          <li>赶出第一版交付</li>
+        </ul>
+      </div>
+      <div class="take-block"><div class="tk">积分回报 1200 南糖豆 + 600 萝卜丁 <span class="pill">暂定</span><br><b class="use">使用权</b></div></div>
+      <span class="tag tag-teal">积分回报</span><span class="tag tag-teal">使用权</span>
+    </div>
+  </div>
+
+  <div class="sl sl-teal">▌ 使用权方 · 投入方法/素材，换得使用权</div>
+  <div class="party-grid">
+    <div class="party-card c-use">
+      <div class="party-role">方法方 · 使用权</div>
+      <div class="party-name">跳跳<span class="alt">iMeeting</span></div>
+      <div class="give-block"><div class="gb-l">投入 Resource In</div><ul class="gb-list"><li>「议事」分析方法与产出</li></ul></div>
+      <div class="take-block"><div class="tk"><b class="use">使用权</b></div></div>
+      <span class="tag tag-teal">使用权</span>
+    </div>
+    <div class="party-card c-use">
+      <div class="party-role">素材方 · 使用权</div>
+      <div class="party-name">砚仁<span class="alt">系列共创</span></div>
+      <div class="give-block"><div class="gb-l">投入 Resource In</div><ul class="gb-list"><li>共创素材 / 作品集</li></ul></div>
+      <div class="take-block"><div class="tk"><b class="use">使用权</b></div></div>
+      <span class="tag tag-teal">使用权</span>
+    </div>
+  </div>
+
+  <div class="callout c-grass"><strong>一句话结构：</strong>富章（FC）出资金与资源，换得代码库所有权与迭代权；淑慧出劳务，换得积分回报与使用权；跳跳、砚仁出方法与素材，换得使用权。各方使用权的后续细分，由相关共创人接下来自行商定。</div>
+</div>
+
+<!-- ══ PAGE 3 — SCOPE ══ -->
+<div id="p3" class="panel">
+  <div class="pg-header">
+    <div class="pg-icon icon-scope">SCOPE<br>&amp; TIME</div>
+    <div class="pg-text">
+      <div class="pg-eyebrow">What to build · By when · Done means</div>
+      <div class="pg-title">范围 · 时间 · 交付</div>
+      <div class="pg-sub">本期交付范围 · 推进周期 · 验收口径</div>
+    </div>
+  </div>
+
+  <div class="sl sl-grass">✅ 本期交付范围 IN SCOPE</div>
+  <div class="scope-wrap">
+    <div class="scope-row head"><div>范围 / 项目</div><div>内容说明 &amp; 验收依据</div></div>
+    <div class="scope-row"><div class="k">(a) 呈现方案</div><div class="v">自适应窄屏（手机优先）的静态 HTML，prototype 方式迭代，覆盖第一、二、三期，纳入第四期即将举办内容。</div></div>
+    <div class="scope-row"><div class="k">(b) Level one 基础页</div><div class="v">作为进入基础页；档头介绍共创营是什么、缘起、历程、当前状况、伙伴关系，并拉入砚仁系列共创。</div></div>
+    <div class="scope-row"><div class="k">(c) 一、二期</div><div class="v">以过往作品集与呈现画廊为主。</div></div>
+    <div class="scope-row"><div class="k">(d) 第三期</div><div class="v">画廊 + 「议事」成果（跳跳的议事分析产出）。工作范围限定为第三期基础背景完成。</div></div>
+    <div class="scope-row"><div class="k">(e) 承接目标</div><div class="v">构建「100 位共创人」基础，为第四期宣传承接。</div></div>
+  </div>
+
+  <div class="sl sl-teal">▌ 推进周期 TIME</div>
+  <div class="why-block" style="margin-bottom:16px;">
+    <div class="kv-row"><div class="kv-k">开工</div><div class="kv-v">2026 年 6 月 22 日</div></div>
+    <div class="kv-row"><div class="kv-k">完成</div><div class="kv-v"><strong>6 月 23 日晚前</strong>（赶 23/24 号展前上线）</div></div>
+    <div class="kv-row"><div class="kv-k">工作当量</div><div class="kv-v">约 24 小时</div></div>
+    <div class="kv-row"><div class="kv-k">周期</div><div class="kv-v">三天</div></div>
+  </div>
+
+  <div class="sl sl-orange">▌ 验收口径 QUALITY</div>
+  <div class="callout c-orange"><strong>完成判准：</strong>产出一套<strong>可对外宣传发布的静态 HTML</strong>，在 23/24 号展前上线即视为本期完成。此判准也是未来若转为智能合约时的触发条件雏形。</div>
+
+  <div class="callout c-yellow"><strong>资源支持（由富章/FC 提供）：</strong>有限 AI 工具与能力（ChatGPT、Cloud Code、Propensity API、Talk API Key 等）、域名、固定 IP、网页空间；可在「人物系统」「论坛」及既有页面基础上完成发布与呈现。</div>
+</div>
+
+<!-- ══ PAGE 4 — COVENANT ══ -->
+<div id="p4" class="panel">
+  <div class="pg-header">
+    <div class="pg-icon icon-pact">PACT<br>SIGN</div>
+    <div class="pg-text">
+      <div class="pg-eyebrow">Common terms · Signatures</div>
+      <div class="pg-title">共同约定 · 签署</div>
+      <div class="pg-sub">社群共有 · 暂定对价 · 共创人落款</div>
+    </div>
+  </div>
+
+  <div class="sl sl-teal">▌ 共同约定</div>
+  <ol class="clauses">
+    <li>共创人地位平等。各自的投入与权益均摊于本约定，对社群<strong>公开存证</strong>；本约定收入 M2C 公共仓库，即为公开的一部分。</li>
+    <li><strong>代码库所有权与后续迭代权</strong>归富章（FC）持有；淑慧、跳跳、砚仁享有<strong>使用权</strong>。各方使用权的后续细分，由相关共创人接下来自行商定。</li>
+    <li>成果属于本次共创社群；各共创人的贡献均予<strong>署名记录</strong>；后续迭代向社群<strong>开放协作</strong>。</li>
+    <li>预算所列积分（1200 南糖豆 + 600 萝卜丁）为<strong>暂定值</strong>，以会后最终修正为准。</li>
+    <li>本次共创为社群之<strong>起点而非终点</strong>：承接「100 位共创人」目标，为第四期宣传铺垫；未来新的共创人可在同一约定精神下加入。</li>
+  </ol>
+
+  <div class="callout c-yellow" style="margin-top:14px;"><strong>风险与待补：</strong>本约定项下之法律风险，尤其大陆法律体系下的合规性，沿用历次会议之标注，保留为<strong>待评估事项</strong>；金额、使用权细分等以「待社群后续修正」处理，不在此硬性锁定。详见「备注 · 引用」分页。</div>
+
+  <div class="sl sl-orange" style="margin-top:22px;">▌ 共创人签署</div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">以 iMeeting 昵称 / 实名落款。签署即表示认同上述投入与权益安排，并愿共同维系此次共创。</p>
+  <div class="sign-grid">
+    <div class="sign"><div><div class="nm">富章</div><div class="alt">FC</div></div><div class="ln">签署 / 日期</div></div>
+    <div class="sign"><div><div class="nm">淑慧</div><div class="alt">和光同尘</div></div><div class="ln">签署 / 日期</div></div>
+    <div class="sign"><div><div class="nm">跳跳</div><div class="alt">iMeeting</div></div><div class="ln">签署 / 日期</div></div>
+    <div class="sign"><div><div class="nm">砚仁</div><div class="alt">系列共创</div></div><div class="ln">签署 / 日期</div></div>
+  </div>
+  <div class="sign-date">订立于 2026 年 6 月 · 依会议 308247877 决议</div>
+</div>
+
+<!-- ══ PAGE 5 — NOTES & REFERENCES ══ -->
+<div id="p5" class="panel">
+  <div class="pg-header">
+    <div class="pg-icon icon-note">NOTE<br>REF</div>
+    <div class="pg-text">
+      <div class="pg-eyebrow">References · Naming · Carrier</div>
+      <div class="pg-title">备注 · 引用</div>
+      <div class="pg-sub">项目管理框架引用 · 用字说明 · 承载与存证</div>
+    </div>
+  </div>
+
+  <div class="sl sl-gray">▌ 引用 · 项目管理框架（PMBOK 十大管理）</div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.8;">本次会议沿用了「项目管理三要素」的语言——范围、时间、预算三者收敛于品质。下图为该框架的引用示意；其中三要素的<strong style="color:var(--ink2)">实际议定值已写在「范围·交付」分页</strong>，此处仅作概念参考，不构成额外约束。</p>
+  <div class="ref-fig">
+    <svg viewBox="0 0 720 430" role="img" aria-label="PMBOK 十大管理引用示意">
+      <rect x="8" y="36" width="704" height="386" rx="14" fill="none" stroke="#a9afb7" stroke-width="1.3"/>
+      <rect x="14" y="6" width="156" height="30" rx="5" fill="#a9afb7" opacity=".85"/>
+      <text x="92" y="26" text-anchor="middle" font-family="'Noto Serif SC',serif" font-weight="700" font-size="14" fill="#fff">项目十大管理</text>
+      <rect x="24" y="66" width="42" height="320" rx="8" fill="none" stroke="#a9afb7" stroke-width="1.1" opacity=".55"/>
+      <text x="45" y="226" text-anchor="middle" font-size="11" fill="#797060" writing-mode="tb" letter-spacing="2">利益相关方</text>
+      <rect x="654" y="66" width="42" height="320" rx="8" fill="none" stroke="#a9afb7" stroke-width="1.1" opacity=".55"/>
+      <text x="675" y="226" text-anchor="middle" font-size="11" fill="#797060" writing-mode="tb" letter-spacing="2">沟通管理</text>
+      <rect x="78" y="66" width="568" height="34" rx="8" fill="none" stroke="#a9afb7" stroke-width="1.1" opacity=".6"/>
+      <text x="362" y="88" text-anchor="middle" font-size="12" fill="#797060" letter-spacing="2">统筹管理</text>
+      <rect x="78" y="352" width="568" height="34" rx="8" fill="none" stroke="#a9afb7" stroke-width="1.1" opacity=".6"/>
+      <text x="362" y="374" text-anchor="middle" font-size="12" fill="#797060" letter-spacing="1.5">风险管理 · 法律合规待评估</text>
+      <rect x="78" y="110" width="568" height="232" rx="10" fill="rgba(186,206,57,.05)" stroke="#eae7df" stroke-width="1"/>
+      <defs>
+        <marker id="rg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#bace39"/></marker>
+        <marker id="rt" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#37afa9"/></marker>
+      </defs>
+      <path d="M226,160 C292,160 292,212 338,220" fill="none" stroke="#bace39" stroke-width="2.1" marker-end="url(#rg)"/>
+      <path d="M226,228 L334,228" fill="none" stroke="#bace39" stroke-width="2.1" marker-end="url(#rg)"/>
+      <path d="M226,296 C292,296 292,244 338,236" fill="none" stroke="#bace39" stroke-width="2.1" marker-end="url(#rg)"/>
+      <path d="M556,162 C504,162 504,216 460,222" fill="none" stroke="#37afa9" stroke-width="1.9" marker-end="url(#rt)" opacity=".8"/>
+      <path d="M556,294 C504,294 504,236 460,230" fill="none" stroke="#37afa9" stroke-width="1.9" marker-end="url(#rt)" opacity=".8"/>
+      <rect x="108" y="136" width="118" height="50" rx="8" fill="#f3f7e0" stroke="#bace39" stroke-width="1.8"/>
+      <text x="167" y="158" text-anchor="middle" font-family="'Noto Serif SC',serif" font-weight="700" font-size="14" fill="#4c5d12">范围管理</text>
+      <text x="167" y="174" text-anchor="middle" font-size="9" fill="#797060">宣传框架 · 三期</text>
+      <rect x="108" y="203" width="118" height="50" rx="8" fill="#f3f7e0" stroke="#bace39" stroke-width="1.8"/>
+      <text x="167" y="225" text-anchor="middle" font-family="'Noto Serif SC',serif" font-weight="700" font-size="14" fill="#4c5d12">时间管理</text>
+      <text x="167" y="241" text-anchor="middle" font-size="9" fill="#797060">6/23 晚前 · 24h</text>
+      <rect x="108" y="270" width="118" height="50" rx="8" fill="#f3f7e0" stroke="#bace39" stroke-width="1.8"/>
+      <text x="167" y="292" text-anchor="middle" font-family="'Noto Serif SC',serif" font-weight="700" font-size="14" fill="#4c5d12">预算管理</text>
+      <text x="167" y="308" text-anchor="middle" font-size="9" fill="#797060">1200 豆 + 600 丁</text>
+      <rect x="336" y="200" width="126" height="58" rx="10" fill="#fef4e5" stroke="#e99123" stroke-width="2.4"/>
+      <text x="399" y="226" text-anchor="middle" font-family="'Noto Serif SC',serif" font-weight="900" font-size="16" fill="#b56b15">品质管理</text>
+      <text x="399" y="244" text-anchor="middle" font-size="9" fill="#9a6512">可对外发布 HTML</text>
+      <rect x="556" y="138" width="74" height="46" rx="8" fill="#e5f5f4" stroke="#37afa9" stroke-width="1.4" opacity=".9"/>
+      <text x="593" y="166" text-anchor="middle" font-family="'Noto Serif SC',serif" font-weight="700" font-size="12.5" fill="#1f6e69">资源管理</text>
+      <rect x="556" y="272" width="74" height="46" rx="8" fill="#f2f3f4" stroke="#a9afb7" stroke-width="1.2" opacity=".85"/>
+      <text x="593" y="300" text-anchor="middle" font-family="'Noto Serif SC',serif" font-weight="700" font-size="12.5" fill="#797060">采购管理</text>
+    </svg>
+    <div class="ref-cap">PMBOK 十大管理 · 萝卜 VI 重绘 · 仅作引用参考</div>
+    <div class="ref-legend">
+      <span><i style="background:#bace39"></i>三要素</span>
+      <span><i style="background:#e99123"></i>品质</span>
+      <span><i style="background:#37afa9"></i>资源投入</span>
+      <span><i style="background:#a9afb7"></i>外围框架</span>
+    </div>
+  </div>
+
+  <div class="sl sl-gray" style="margin-top:22px;">▌ 用字说明</div>
+  <div class="callout c-grass"><strong>「南糖豆」</strong>——本约定中的积分名称沿用通过的主动议原文写法（南糖豆）。M2C 早期项目（如 02）中使用的是「南唐豆 / NT」。两者是否统一为同一用字，留待社群确认；本页如实保留原文。</div>
+
+  <div class="sl sl-gray" style="margin-top:8px;">▌ 承载与存证</div>
+  <div class="callout c-teal"><strong>M2C 公共仓库</strong>——本约定作为 M2C（Motion to Contract）链路「决议 → 契约」的一环，存放于公共仓库并对社群公开，本身即为一种公开存证。后续若条件成熟，可沿「契约 → 电子合同 → 智能合约」继续推进。</div>
+</div>
+
+<script>
+function sw(id, el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+}
+</script>
+
+<div class="m2c-version-spacer" aria-hidden="true"></div>
+<div class="m2c-version-panel" data-m2c-version-panel aria-label="契约版本列表">
+  <div class="m2c-version-panel-title">M2C · 03 Co-Art Create Promotion · 艺术共创营系列宣传框架 · 历史沿革</div>
+  <div class="m2c-index-url" data-m2c-index-url>
+    <code>https://fchuang508.github.io/M2C/03-coart-create-promotion/</code>
+    <button class="m2c-copy-url" type="button" data-m2c-copy-url data-url="https://fchuang508.github.io/M2C/03-coart-create-promotion/">复制</button>
+  </div>
+  <div class="m2c-version-list">
+    <a class="m2c-version-item" href="./index.html" aria-current="page"><span>最新契约</span><span class="m2c-version-badge">固定入口</span></a>
+  </div>
+</div>
+<footer class="m2c-version-footbar" aria-label="契约页脚">
+  <div class="m2c-version-inner">
+    <div>
+      <div class="m2c-version-kicker">M2C · 03 Co-Art Create Promotion · 艺术共创营系列宣传框架</div>
+      <div class="m2c-version-title">当前显示：最新正式契约 · 依会议 308247877 决议</div>
+    </div>
+    <div class="m2c-version-actions">
+      <button class="m2c-copy-url" type="button" data-m2c-copy-url data-url="https://fchuang508.github.io/M2C/03-coart-create-promotion/">复制网址</button>
+      <button class="m2c-version-toggle" type="button" data-m2c-version-toggle aria-expanded="false">版本</button>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (() => {
+    function m2cCopyUrl(button){
+      const url = button.getAttribute("data-url");
+      const original = button.textContent;
+      button.textContent = "已复制";
+      window.setTimeout(()=>{button.textContent = original;}, 1400);
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).catch(()=>window.prompt("复制入口网址", url));
+      } else { window.prompt("复制入口网址", url); }
+    }
+    document.querySelectorAll("[data-m2c-copy-url]").forEach(b=>b.addEventListener("click", ()=>m2cCopyUrl(b)));
+    const toggle = document.querySelector("[data-m2c-version-toggle]");
+    const panel = document.querySelector("[data-m2c-version-panel]");
+    if(!toggle || !panel) return;
+    function setOpen(open){ panel.classList.toggle("open", open); toggle.setAttribute("aria-expanded", String(open)); }
+    toggle.addEventListener("click", ()=>setOpen(!panel.classList.contains("open")));
+    document.addEventListener("keydown", e=>{ if(e.key==="Escape") setOpen(false); });
+    document.addEventListener("click", e=>{
+      if(!panel.classList.contains("open")) return;
+      if(panel.contains(e.target) || toggle.contains(e.target)) return;
+      setOpen(false);
+    });
+  })();
+</script>
+</body>
+</html>
