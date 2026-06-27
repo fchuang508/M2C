@@ -20,6 +20,8 @@ This repository holds two kinds of public project pages: **quotations** (报价�
 - Each covenant folder uses `index.html` as the covenant body, and stores its source records (meeting minutes, speech log) alongside it, prefixed by the meeting number, e.g. `308247877-minutes.md`.
 - A covenant should cite the resolution it is based on: organization, meeting number, date, validity, and vote result.
 - Amounts or terms still under revision should be marked as provisional (暂定 · 以会后最终修正为准) rather than hard-locked.
+- Versioned covenant files should use `contract-vN-YYYYMMDD.html` or another stable published filename, while the page label shown to readers should use `C-YYYYMMDD-vN`.
+- When a covenant receives a later supplement, keep `index.html` as the latest public URL, preserve the earlier covenant as a version archive, and add a readable difference page when the supplement changes the contract body.
 
 ## Projects
 

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M2C 03 · C-20260624-v1 → C-20260627-v2 · 版本差异</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;600&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --orange:#e99123; --teal:#37afa9; --grass:#bace39; --gray:#a9afb7; --yellow:#ffc300;
+  --bg:#f7f5f0; --surface:#eeebe3; --card:#ffffff; --border:#ddd9ce; --border2:#eae7df;
+  --ink:#1e1c17; --ink2:#3d3a30; --muted:#797060; --dim:#b0a990;
+  --orange-bg:#fef4e5; --teal-bg:#e5f5f4; --grass-bg:#f3f7e0; --gray-bg:#f2f3f4; --yellow-bg:#fffbe5;
+  --mono:'IBM Plex Mono',monospace; --sans:'Noto Sans SC',sans-serif; --serif:'Noto Serif SC',serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;font-size:14px;line-height:1.7;min-height:100vh;padding:44px 40px 108px;}
+a{color:var(--teal);text-decoration:none;} a:hover{text-decoration:underline;}
+.wrap{max-width:1040px;margin:0 auto;}
+.hero{background:linear-gradient(135deg,var(--teal-bg) 0%,#f9f8f3 56%,var(--orange-bg) 100%);border:1px solid var(--border);border-top:3px solid var(--teal);padding:30px 34px;margin-bottom:22px;}
+.eyebrow{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:7px;}
+h1{font-family:var(--serif);font-size:28px;font-weight:900;line-height:1.2;color:var(--ink);margin-bottom:8px;}
+.sub{font-family:var(--mono);font-size:11px;color:var(--teal);margin-bottom:16px;}
+.desc{font-size:13px;color:var(--ink2);line-height:1.9;max-width:760px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-top:20px;}
+.cell{background:var(--card);padding:12px 14px;}
+.cell-k{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-bottom:3px;}
+.cell-v{font-size:13px;font-weight:600;color:var(--ink);}
+.cell-v.teal{color:var(--teal);} .cell-v.orange{color:var(--orange);} .cell-v.grass{color:#6a8a00;}
+.sl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:8px 14px;margin:18px 0 10px;border-left:3px solid;}
+.sl-teal{background:var(--teal-bg);color:var(--teal);border-color:var(--teal);}
+.sl-orange{background:var(--orange-bg);color:var(--orange);border-color:var(--orange);}
+.sl-gray{background:var(--gray-bg);color:#5a6070;border-color:var(--gray);}
+.callout{border-left:3px solid var(--yellow);background:var(--yellow-bg);color:#7a5a14;padding:12px 15px;font-size:12px;line-height:1.8;margin:12px 0 18px;}
+.callout strong{color:#8a6a00;font-weight:700;}
+.change-table{background:var(--card);border:1px solid var(--border);overflow:hidden;}
+.row{display:grid;grid-template-columns:150px 1fr 1fr 1fr;border-bottom:1px solid var(--border2);}
+.row:last-child{border-bottom:none;}
+.head{background:var(--surface);font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--dim);font-weight:600;}
+.td{padding:13px 15px;font-size:12px;color:var(--ink2);line-height:1.75;border-right:1px solid var(--border2);}
+.td:last-child{border-right:none;}
+.pos{font-weight:700;color:var(--ink);font-size:13px;}
+.old{color:var(--muted);}
+.new{color:#1f6e69;background:rgba(55,175,169,.08);}
+.impact{color:#7a5a14;background:rgba(255,195,0,.10);}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.08em;padding:2px 7px;border:1px solid;margin:0 4px 4px 0;text-transform:uppercase;}
+.tag-v1{background:var(--gray-bg);color:#5a6070;border-color:var(--gray);}
+.tag-v2{background:var(--teal-bg);color:var(--teal);border-color:var(--teal);}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
+.btn{min-height:38px;display:inline-flex;align-items:center;justify-content:center;padding:0 14px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--ink);font-size:13px;font-weight:800;text-decoration:none;}
+.btn.primary{background:var(--teal);border-color:var(--teal);color:#111827;}
+.m2c-index-url{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin:0 0 12px;padding:10px 12px;border:1px solid #e5e7eb;border-radius:12px;background:#f8fafc;}
+.m2c-index-url code{color:#374151;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.m2c-copy-url{min-height:34px;display:inline-flex;align-items:center;justify-content:center;padding:0 12px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;font:inherit;font-size:12px;font-weight:800;cursor:pointer;}
+.m2c-index-url .m2c-copy-url{color:#111827;background:#fff;border-color:#d1d5db;}
+.m2c-version-spacer{height:86px;}
+.m2c-version-footbar{position:fixed;left:0;right:0;bottom:0;z-index:500;display:flex;justify-content:center;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(18,22,28,.88);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.14);box-shadow:0 -14px 36px rgba(0,0,0,.18);}
+.m2c-version-inner{width:min(1040px,100%);display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;}
+.m2c-version-kicker{color:rgba(255,255,255,.58);font-size:11px;font-weight:700;}
+.m2c-version-title{margin-top:3px;color:#fff;font-size:14px;font-weight:800;}
+.m2c-version-actions{display:flex;gap:8px;align-items:center;}
+.m2c-version-link,.m2c-version-toggle{min-height:38px;display:inline-flex;align-items:center;justify-content:center;padding:0 14px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;font:inherit;font-size:13px;font-weight:800;text-decoration:none;cursor:pointer;}
+.m2c-version-link.primary{background:#37afa9;border-color:#37afa9;color:#111827;}
+.m2c-version-panel{position:fixed;left:50%;bottom:calc(76px + env(safe-area-inset-bottom));z-index:499;width:min(520px,calc(100% - 32px));padding:14px;border-radius:18px;background:#fff;color:#1f2937;box-shadow:0 22px 70px rgba(0,0,0,.24);transform:translate(-50%,18px);opacity:0;pointer-events:none;transition:transform .18s ease,opacity .18s ease;}
+.m2c-version-panel.open{transform:translate(-50%,0);opacity:1;pointer-events:auto;}
+.m2c-version-panel-title{padding:2px 4px 10px;color:#6b7280;font-size:12px;font-weight:800;}
+.m2c-version-list{display:grid;gap:8px;}
+.m2c-version-item{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;padding:0 12px;border:1px solid #e5e7eb;border-radius:12px;color:#1f2937;text-decoration:none;font-size:13px;font-weight:800;}
+.m2c-version-item[aria-current="page"]{border-color:#37afa9;background:#edf8f8;}
+.m2c-version-badge{color:#6b7280;font-size:11px;font-weight:800;}
+@media(max-width:760px){
+  body{padding:30px 18px 128px;}
+  .hero{padding:24px 22px;}
+  h1{font-size:24px;}
+  .row{grid-template-columns:1fr;}
+  .td{border-right:none;border-bottom:1px solid var(--border2);}
+  .td:last-child{border-bottom:none;}
+  .head{display:none;}
+  .td::before{content:attr(data-label);display:block;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:4px;}
+  .m2c-index-url{grid-template-columns:1fr;}
+  .m2c-index-url code{white-space:normal;word-break:break-all;}
+  .m2c-version-inner{grid-template-columns:1fr;gap:8px;}
+  .m2c-version-actions{justify-content:space-between;}
+  .m2c-version-link,.m2c-version-toggle{flex:1;min-height:36px;padding:0 10px;font-size:12px;}
+  .m2c-version-panel{bottom:calc(118px + env(safe-area-inset-bottom));}
+  .m2c-version-spacer{height:124px;}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">M2C · 03 Co-Art Create Promotion · Version Diff</div>
+    <h1>版本 1 → 版本 2</h1>
+    <div class="sub">艺术共创营系列宣传框架 · 共创出资约定 · 版本差异</div>
+    <p class="desc">版本 2 是在版本 1 契约基础上增加「2026 年 6 月 23 日 40 元人民币的 token 费用」的补充确认。当前最新版本为版本 2。该变更只确认执行成本补偿，不改变原交付范围、代码库所有权、各方使用权与积分安排。</p>
+    <div class="grid">
+      <div class="cell"><div class="cell-k">原版本</div><div class="cell-v">版本 1 · C-20260624-v1</div></div>
+      <div class="cell"><div class="cell-k">新版本</div><div class="cell-v teal">版本 2 · C-20260627-v2</div></div>
+      <div class="cell"><div class="cell-k">变更类型</div><div class="cell-v orange">执行成本补充确认</div></div>
+      <div class="cell"><div class="cell-k">实质影响</div><div class="cell-v grass">仅新增 ¥40 报销</div></div>
+    </div>
+  </section>
+
+  <div class="sl sl-teal">▌ 结论摘要</div>
+  <div class="callout"><strong>版本判断：</strong>版本 2 属于在版本 1 契约上进行的补充确认。版本 1 保留为原契约档案，版本 2 是当前最新正式契约，差异页用于说明两版之间新增了哪些内容。</div>
+
+  <div class="sl sl-orange">▌ 变更对照</div>
+  <section class="change-table" aria-label="V1 到 V2 的变更对照">
+    <div class="row head">
+      <div class="td">位置</div>
+      <div class="td">版本 1</div>
+      <div class="td">版本 2</div>
+      <div class="td">说明</div>
+    </div>
+    <div class="row">
+      <div class="td pos" data-label="位置">契约摘要</div>
+      <div class="td old" data-label="版本 1">对价（暂定）：1200 个南塘豆 + 600 个萝卜丁。</div>
+      <div class="td new" data-label="版本 2">内容增加：(a) 1200 个南塘豆；(b) 600 个萝卜丁；(c) 40 元人民币的 token 费用。</div>
+      <div class="td impact" data-label="说明">将版本 2 的三项内容放进正文与摘要，便于直接确认当前最新契约内容。</div>
+    </div>
+    <div class="row">
+      <div class="td pos" data-label="位置">FC 投入栏</div>
+      <div class="td old" data-label="版本 1">列明积分资源、AI 工具与算力、域名、固定 IP、网页空间等资源支持。</div>
+      <div class="td new" data-label="版本 2">新增「执行成本报销：40 元人民币的 token 费用（6/23 微信确认）」。</div>
+      <div class="td impact" data-label="说明">把 40 元作为执行过程中的实际成本补偿列入 FC 的承担项。</div>
+    </div>
+    <div class="row">
+      <div class="td pos" data-label="位置">淑惠权益栏</div>
+      <div class="td old" data-label="版本 1">积分回报 1200 个南塘豆 + 600 个萝卜丁，另享使用权。</div>
+      <div class="td new" data-label="版本 2">在原积分回报与使用权之外，新增「40 元人民币的 token 费用报销（2026/6/23 微信确认）」。</div>
+      <div class="td impact" data-label="说明">明确收受对象与补偿性质，避免把报销混同为原积分对价。</div>
+    </div>
+    <div class="row">
+      <div class="td pos" data-label="位置">共同约定</div>
+      <div class="td old" data-label="版本 1">预算积分为暂定值，以会后最终修正为准。</div>
+      <div class="td new" data-label="版本 2">新增「补充确认（2026 年 6 月 23 日）」完整条款，说明 40 元人民币的 token 使用成本、微信确认、报销主体与不改变原权利安排。</div>
+      <div class="td impact" data-label="说明">这是 V2 的核心变化，也是本次版本升级的依据。</div>
+    </div>
+    <div class="row">
+      <div class="td pos" data-label="位置">版本管理</div>
+      <div class="td old" data-label="版本 1">作为原契约档案保存，版本号为 C-20260624-v1。</div>
+      <div class="td new" data-label="版本 2">最新入口 index.html 指向版本 2（C-20260627-v2），并保留版本 1、版本 2 档案与本差异页。</div>
+      <div class="td impact" data-label="说明">固定入口继续可用，同时保留版本按钮、版本追溯与差异说明。</div>
+    </div>
+  </section>
+
+  <div class="sl sl-gray">▌ 版本入口</div>
+  <div class="actions">
+    <a class="btn primary" href="./index.html">打开最新契约</a>
+    <a class="btn" href="./contract-v2-20260627.html">查看版本 2</a>
+    <a class="btn" href="./contract-v1-20260624.html">查看版本 1</a>
+  </div>
+</main>
+
+<div class="m2c-version-spacer" aria-hidden="true"></div>
+<div class="m2c-version-panel" data-m2c-version-panel aria-label="契约版本列表">
+  <div class="m2c-version-panel-title">M2C · 03 Co-Art Create Promotion · 艺术共创营系列宣传框架 · 历史沿革</div>
+  <div class="m2c-index-url" data-m2c-index-url>
+    <code>https://fchuang508.github.io/M2C/03-coart-create-promotion/</code>
+    <button class="m2c-copy-url" type="button" data-m2c-copy-url data-url="https://fchuang508.github.io/M2C/03-coart-create-promotion/">复制</button>
+  </div>
+  <div class="m2c-version-list">
+    <a class="m2c-version-item" href="./index.html"><span>最新版本：版本 2</span><span class="m2c-version-badge">固定入口 · C-20260627-v2</span></a>
+    <a class="m2c-version-item" href="./contract-v2-20260627.html"><span>版本 2</span><span class="m2c-version-badge">版本档案 · C-20260627-v2</span></a>
+    <a class="m2c-version-item" href="./contract-v1-20260624.html"><span>版本 1</span><span class="m2c-version-badge">原契约档案 · C-20260624-v1</span></a>
+    <a class="m2c-version-item" href="./diff-v1-v2-20260627.html" aria-current="page"><span>版本 1 → 版本 2 差异</span><span class="m2c-version-badge">当前页 · 变更对照</span></a>
+  </div>
+</div>
+<footer class="m2c-version-footbar" aria-label="契约页脚">
+  <div class="m2c-version-inner">
+    <div>
+      <div class="m2c-version-kicker">M2C · 03 Co-Art Create Promotion · 艺术共创营系列宣传框架</div>
+      <div class="m2c-version-title">当前显示：版本 1 → 版本 2 差异</div>
+    </div>
+    <div class="m2c-version-actions">
+      <button class="m2c-copy-url" type="button" data-m2c-copy-url data-url="https://fchuang508.github.io/M2C/03-coart-create-promotion/">复制网址</button>
+      <a class="m2c-version-link primary" href="./index.html">最新</a>
+      <button class="m2c-version-toggle" type="button" data-m2c-version-toggle aria-expanded="false">版本</button>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (() => {
+    function m2cCopyUrl(button){
+      const url = button.getAttribute("data-url");
+      const original = button.textContent;
+      button.textContent = "已复制";
+      window.setTimeout(()=>{button.textContent = original;}, 1400);
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).catch(()=>window.prompt("复制入口网址", url));
+      } else { window.prompt("复制入口网址", url); }
+    }
+    document.querySelectorAll("[data-m2c-copy-url]").forEach(b=>b.addEventListener("click", ()=>m2cCopyUrl(b)));
+    const toggle = document.querySelector("[data-m2c-version-toggle]");
+    const panel = document.querySelector("[data-m2c-version-panel]");
+    if(!toggle || !panel) return;
+    function setOpen(open){ panel.classList.toggle("open", open); toggle.setAttribute("aria-expanded", String(open)); }
+    toggle.addEventListener("click", ()=>setOpen(!panel.classList.contains("open")));
+    document.addEventListener("keydown", e=>{ if(e.key==="Escape") setOpen(false); });
+    document.addEventListener("click", e=>{
+      if(!panel.classList.contains("open")) return;
+      if(panel.contains(e.target) || toggle.contains(e.target)) return;
+      setOpen(false);
+    });
+  })();
+</script>
+</body>
+</html>
