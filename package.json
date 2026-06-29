@@ -1,0 +1,7 @@
+{
+  "name": "imeeting-club",
+  "private": true,
+  "scripts": {
+    "deploy:cloudflare": "npx wrangler pages deploy . --project-name imeeting-club --branch main"
+  }
+}
