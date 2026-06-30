@@ -1,7 +1,7 @@
 {
-  "name": "imeeting-club",
+  "name": "m2c-contracts",
   "private": true,
   "scripts": {
-    "deploy:cloudflare": "npx wrangler pages deploy . --project-name imeeting-club --branch main"
+    "deploy:cloudflare": "npx wrangler pages deploy . --project-name m2c-contracts --branch main"
   }
 }
