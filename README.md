@@ -1,7 +1,10 @@
-# M2C — Motion to Contract
+# I'm Meeting M2C — Motion to Contract
 From Conversation to Inevitable Execution · by iMeeting
 
-This repository holds two kinds of public project pages: **quotations** (报价单) and **co-creation covenants / contracts** (共创契约). Its long-term role is the M2C contract module for iMeeting, mounted under `https://imeeting.club/contracts/`.
+GitHub repository: `fchuang508/imeeting-M2C`
+Cloudflare Pages project: `imeeting-m2c`
+
+This repository holds two kinds of public project pages: **quotations** (报价单) and **co-creation covenants / contracts** (共创契约). Its long-term role is the I'm Meeting M2C contract module for iMeeting, mounted under `https://contracts.imeeting.club/contracts/`.
 
 The root domains `https://imeeting.club` and `https://www.imeeting.club` belong to the future iMeeting homepage repository, not this M2C repository. Contracts use neutral canonical URLs under `/contracts/{contractId}/`. Numbered project folders remain available as source/project archives and transition paths.
 
@@ -27,8 +30,8 @@ The root domains `https://imeeting.club` and `https://www.imeeting.club` belong 
 
 ## Cloudflare Pages
 
-- Project name: `m2c-contracts`
-- Future canonical mount: `https://imeeting.club/contracts/`
+- Project name: `imeeting-m2c`
+- Current contract mount: `https://contracts.imeeting.club/contracts/`
 - Temporary direct domain can be a Pages-provided domain or a subdomain such as `contracts.imeeting.club`.
 - Output directory: repository root
 - Build command: none
@@ -39,6 +42,6 @@ The root domains `https://imeeting.club` and `https://www.imeeting.club` belong 
 
 - `01-semi-wallet-integration/` — Semi Wallet Integration · 报价单
 - `02-imeeting-onboarding-video/` — iMeeting Onboarding 视频 · 报价单
-- `contracts/` — M2C public contract index
+- `contracts/` — I'm Meeting M2C public contract index
 - `contracts/c_20260627_coart-create-promotion/` — Co-Art Create Promotion · 艺术共创营系列宣传框架 · 共创契约（会议 308247877）
 - `03-coart-create-promotion/` — legacy project folder for the same covenant
